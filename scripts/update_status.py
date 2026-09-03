@@ -23,7 +23,17 @@ def main():
  except Exception: low=None; cold=old['weather']['cold']['active']; errors.append('気温')
  try:
   h=get('https://idsc.tmiph.metro.tokyo.lg.jp/diseases/flu/flu/',False); t=re.sub('<[^>]+>',' ',h)
-  level='警報' if '警報基準を超え' in t else ('注意' if '注意報基準を超え' in t else ('流行中' if '流行' in t else '確認中'))
+  def get_flu_level(value):
+    if value >= 30:
+        return "警報レベル"
+
+    if value >= 10:
+        return "注意報レベル"
+
+    if value >= 1:
+        return "流行中"
+
+    return "非流行"
  except Exception: level='確認中'; errors.append('感染症')
  d={'updated':datetime.now(JST).strftime('%Y-%m-%d %H:%M'),'sourceStatus':'正常' if not errors else '一部取得失敗：'+'・'.join(errors),'influenza':{'level':level,'period':'東京都','trend':'公式発表を自動確認'},'weather':{'wind':{'active':wind,'normalText':'情報なし','alertText':'強風注意','note':'飛散・揚重確認'},'dry':{'active':dry,'normalText':'情報なし','alertText':'火気注意','note':'消火確認を徹底'},'cold':{'active':cold,'normalText':'情報なし','alertText':'凍結注意','note':f'予想最低気温 {low:g}℃' if low is not None else '通路・足元確認'}}}
  OUT.write_text(json.dumps(d,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
