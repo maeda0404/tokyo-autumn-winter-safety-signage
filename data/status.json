@@ -1,36 +1,37 @@
 {
-  "updated": "初回自動更新前",
-  "sourceStatus": "確認中",
+  "updated": "2026-09-03 16:11",
+  "sourceStatus": "正常",
   "influenza": {
-    "level": "確認中",
-    "week": "最新発表",
-    "period": "東京都",
-    "perSentinel": null,
+    "level": "流行中",
+    "week": "第34週",
+    "period": "8月17日～8月23日",
+    "perSentinel": 1.49,
     "previousPerSentinel": null,
     "difference": null,
     "reportedCases": null,
-    "trend": "公式情報を確認中",
+    "trend": "東京都公式発表",
     "provisional": true,
-    "dataStatus": "自動更新前"
+    "dataStatus": "取得成功",
+    "sourceUrl": "https://www.metro.tokyo.lg.jp/information/press/2026/08/2026082720"
   },
   "weather": {
     "wind": {
       "active": false,
-      "normalText": "確認中",
+      "normalText": "情報なし",
       "alertText": "強風注意",
       "note": "飛散・揚重確認"
     },
     "dry": {
       "active": false,
-      "normalText": "確認中",
+      "normalText": "情報なし",
       "alertText": "火気注意",
       "note": "消火確認を徹底"
     },
     "cold": {
       "active": false,
-      "normalText": "確認中",
+      "normalText": "情報なし",
       "alertText": "凍結注意",
-      "note": "予想最低気温を確認中"
+      "note": "予想最低気温 23℃"
     }
   }
 }
