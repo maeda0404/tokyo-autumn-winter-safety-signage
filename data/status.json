@@ -2,9 +2,15 @@
   "updated": "2026-09-03 15:34",
   "sourceStatus": "正常",
   "influenza": {
-    "level": "警報",
-    "period": "東京都",
-    "trend": "公式発表を自動確認"
+    "level": "流行中",
+    "week": "2026年第34週",
+    "period": "8月17日～8月23日",
+    "perSentinel": 1.49,
+    "previousPerSentinel": 0.90,
+    "difference": 0.59,
+    "reportedCases": 574,
+    "provisional": true,
+    "trend": "前週より増加"
   },
   "weather": {
     "wind": {
@@ -27,3 +33,4 @@
     }
   }
 }
+``
