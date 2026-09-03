@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>東京 秋冬安全情報</title>
+
   <style>
     :root {
       --gap: clamp(5px, 1.05vmin, 10px);
@@ -77,7 +78,7 @@
       min-width: 0;
       min-height: 0;
       display: grid;
-      grid-template-rows: minmax(0, 1.12fr) minmax(0, 0.88fr);
+      grid-template-rows: minmax(0, 1.22fr) minmax(0, 0.78fr);
       gap: var(--gap);
     }
 
@@ -93,11 +94,11 @@
     }
 
     .panel-title {
-      padding: clamp(8px, 1.5vh, 14px);
+      padding: clamp(7px, 1.35vh, 13px);
       background: var(--purple);
       color: #ffffff;
       text-align: center;
-      font-size: clamp(25px, 4.2vmin, 46px);
+      font-size: clamp(24px, 4vmin, 44px);
       font-weight: 900;
       line-height: 1;
       white-space: nowrap;
@@ -106,34 +107,70 @@
     .flu-main {
       min-width: 0;
       min-height: 0;
-      padding: clamp(8px, 1.5vmin, 16px);
+      padding: clamp(7px, 1.35vmin, 14px);
       display: grid;
-      grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
-      grid-template-rows: minmax(0, 1fr) auto;
+      grid-template-columns: minmax(0, 0.75fr) minmax(0, 1.25fr);
       align-items: center;
+      gap: clamp(5px, 1vmin, 10px);
     }
 
     .flu-caption {
       text-align: center;
-      font-size: clamp(22px, 3.7vmin, 40px);
+      font-size: clamp(21px, 3.4vmin, 37px);
       font-weight: 900;
-      line-height: 1.25;
+      line-height: 1.2;
+    }
+
+    .flu-data {
+      min-width: 0;
+      display: grid;
+      grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+      grid-template-rows: auto auto;
+      align-items: center;
+      column-gap: clamp(8px, 1.5vmin, 18px);
+      row-gap: clamp(3px, 0.6vmin, 7px);
     }
 
     .flu-level {
+      grid-row: 1 / 3;
       text-align: center;
       color: var(--purple);
-      font-size: clamp(54px, 10vmin, 104px);
+      font-size: clamp(43px, 8.2vmin, 86px);
       font-weight: 900;
       line-height: 0.95;
       white-space: nowrap;
     }
 
-    .flu-week {
-      grid-column: 1 / -1;
-      padding-top: clamp(4px, 0.7vmin, 8px);
+    .sentinel-box {
+      min-width: 0;
       text-align: center;
-      font-size: clamp(18px, 2.8vmin, 30px);
+    }
+
+    .sentinel-label {
+      font-size: clamp(15px, 2.2vmin, 24px);
+      font-weight: 900;
+      line-height: 1.05;
+      white-space: nowrap;
+    }
+
+    .sentinel-value {
+      margin-top: clamp(2px, 0.4vmin, 5px);
+      color: #4e208d;
+      font-size: clamp(42px, 7.8vmin, 82px);
+      font-weight: 900;
+      line-height: 0.95;
+      font-variant-numeric: tabular-nums;
+      white-space: nowrap;
+    }
+
+    .sentinel-unit {
+      margin-left: 0.08em;
+      font-size: 0.48em;
+    }
+
+    .flu-meta {
+      text-align: center;
+      font-size: clamp(14px, 2.1vmin, 23px);
       font-weight: 900;
       line-height: 1.1;
       white-space: nowrap;
@@ -151,11 +188,11 @@
 
     .action {
       min-width: 0;
-      padding: clamp(8px, 1.2vmin, 13px) 3px;
+      padding: clamp(7px, 1.1vmin, 12px) 3px;
       background: #ffffff;
       border-radius: 12px;
       text-align: center;
-      font-size: clamp(19px, 3vmin, 32px);
+      font-size: clamp(18px, 2.8vmin, 30px);
       font-weight: 900;
       line-height: 1;
       white-space: nowrap;
@@ -184,24 +221,24 @@
     }
 
     .card-name {
-      font-size: clamp(30px, 5.2vmin, 54px);
+      font-size: clamp(29px, 5vmin, 52px);
       font-weight: 900;
       line-height: 1;
       white-space: nowrap;
     }
 
     .card-state {
-      margin-top: clamp(7px, 1.1vmin, 12px);
-      font-size: clamp(20px, 3.3vmin, 34px);
+      margin-top: clamp(6px, 1vmin, 11px);
+      font-size: clamp(19px, 3.1vmin, 32px);
       font-weight: 900;
       line-height: 1.05;
       white-space: nowrap;
     }
 
     .card-note {
-      margin-top: clamp(5px, 0.8vmin, 9px);
+      margin-top: clamp(4px, 0.7vmin, 8px);
       color: #17212b;
-      font-size: clamp(16px, 2.4vmin, 25px);
+      font-size: clamp(15px, 2.2vmin, 23px);
       font-weight: 900;
       line-height: 1.1;
       white-space: nowrap;
@@ -228,7 +265,7 @@
     }
 
     .card.active .card-state {
-      font-size: clamp(22px, 3.7vmin, 39px);
+      font-size: clamp(21px, 3.5vmin, 37px);
     }
 
     @keyframes pulse {
@@ -243,7 +280,7 @@
       padding: 0 10px;
       background: #ffffff;
       color: #3e4954;
-      font-size: clamp(14px, 2.1vmin, 22px);
+      font-size: clamp(13px, 2vmin, 21px);
       font-weight: 900;
       line-height: 1;
       text-align: center;
@@ -256,19 +293,21 @@
       color: #b00020 !important;
     }
 
-    /* 縦長の表示窓になった場合 */
     @media screen and (max-aspect-ratio: 4 / 5) {
       main {
-        grid-template-rows: minmax(0, 0.9fr) minmax(0, 1.5fr);
+        grid-template-rows: minmax(0, 1fr) minmax(0, 1.45fr);
       }
 
       .flu-main {
         grid-template-columns: 1fr;
-        grid-template-rows: auto auto auto;
       }
 
-      .flu-week {
-        grid-column: auto;
+      .flu-caption br {
+        display: none;
+      }
+
+      .flu-data {
+        grid-template-columns: 1fr 1fr;
       }
 
       .weather {
@@ -279,7 +318,7 @@
       .card {
         flex-direction: row;
         justify-content: space-between;
-        gap: 12px;
+        gap: 10px;
       }
 
       .card-state,
@@ -288,7 +327,6 @@
       }
     }
 
-    /* 高さが低い埋め込み枠 */
     @media screen and (max-height: 560px) {
       body {
         grid-template-rows: 48px minmax(0, 1fr) 26px;
@@ -296,10 +334,7 @@
         padding: 4px;
       }
 
-      .panel-title {
-        padding: 5px;
-      }
-
+      .panel-title,
       .flu-main,
       .actions,
       .card {
@@ -312,6 +347,7 @@
     }
   </style>
 </head>
+
 <body>
   <header class="header">
     <div class="header-title">東京　秋冬安全情報</div>
@@ -324,8 +360,19 @@
 
       <div class="flu-main">
         <div class="flu-caption">東京都の<br>流行状況</div>
-        <div class="flu-level" id="fluLevel">確認中</div>
-        <div class="flu-week" id="fluWeek">データ取得中</div>
+
+        <div class="flu-data">
+          <div class="flu-level" id="fluLevel">確認中</div>
+
+          <div class="sentinel-box">
+            <div class="sentinel-label">定点当たり報告数</div>
+            <div class="sentinel-value" id="perSentinel">
+              --<span class="sentinel-unit">人</span>
+            </div>
+          </div>
+
+          <div class="flu-meta" id="fluMeta">データ取得中</div>
+        </div>
       </div>
 
       <div class="actions">
@@ -375,17 +422,55 @@
 
     function displayCard(key, item) {
       const card = document.getElementById(key + "Card");
+
       document.getElementById(key + "State").textContent =
         item.active ? item.alertText : item.normalText;
-      document.getElementById(key + "Note").textContent = item.note || "";
+
+      document.getElementById(key + "Note").textContent =
+        item.note || "";
+
       card.classList.toggle("active", Boolean(item.active));
+    }
+
+    function displayInfluenza(influenza) {
+      const levelElement = document.getElementById("fluLevel");
+      const valueElement = document.getElementById("perSentinel");
+      const metaElement = document.getElementById("fluMeta");
+
+      levelElement.textContent = influenza.level || "確認中";
+
+      const value = Number(influenza.perSentinel);
+
+      if (Number.isFinite(value)) {
+        valueElement.innerHTML =
+          value.toFixed(2) + '<span class="sentinel-unit">人</span>';
+      } else {
+        valueElement.innerHTML =
+          '--<span class="sentinel-unit">人</span>';
+      }
+
+      const metaParts = [];
+
+      if (influenza.week) {
+        metaParts.push(influenza.week);
+      }
+
+      if (influenza.period && influenza.period !== "東京都") {
+        metaParts.push(influenza.period);
+      }
+
+      metaElement.textContent =
+        metaParts.length > 0
+          ? metaParts.join("　")
+          : "最新情報を確認中";
     }
 
     async function loadData() {
       try {
-        const response = await fetch(DATA_URL + "?t=" + Date.now(), {
-          cache: "no-store"
-        });
+        const response = await fetch(
+          DATA_URL + "?t=" + Date.now(),
+          { cache: "no-store" }
+        );
 
         if (!response.ok) {
           throw new Error("status.json HTTP " + response.status);
@@ -393,12 +478,7 @@
 
         const data = await response.json();
 
-        document.getElementById("fluLevel").textContent =
-          data.influenza.level;
-
-        document.getElementById("fluWeek").textContent =
-          data.influenza.period + "　" + data.influenza.trend;
-
+        displayInfluenza(data.influenza || {});
         displayCard("wind", data.weather.wind);
         displayCard("dry", data.weather.dry);
         displayCard("cold", data.weather.cold);
@@ -407,8 +487,13 @@
           "更新：" + data.updated + "　" + (data.sourceStatus || "");
       } catch (error) {
         console.error(error);
+
         document.getElementById("fluLevel").textContent = "取得失敗";
         document.getElementById("fluLevel").classList.add("error");
+        document.getElementById("perSentinel").innerHTML =
+          '--<span class="sentinel-unit">人</span>';
+        document.getElementById("fluMeta").textContent =
+          "データ取得を確認してください";
         document.getElementById("footer").textContent =
           "データ更新を確認してください";
       }
