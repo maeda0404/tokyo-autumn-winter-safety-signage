@@ -1,5 +1,5 @@
 {
-  "updated": "2026-09-07 04:09",
+  "updated": "2026-09-07 06:19",
   "sourceStatus": "正常",
   "influenza": {
     "level": "流行中",
@@ -31,7 +31,7 @@
       "active": false,
       "normalText": "情報なし",
       "alertText": "凍結注意",
-      "note": "予想最低気温 21℃"
+      "note": "予想最低気温 24℃"
     }
   }
 }
