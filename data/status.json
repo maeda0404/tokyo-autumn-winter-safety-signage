@@ -1,13 +1,13 @@
 {
-  "updated": "2026-09-07 13:43",
+  "updated": "2026-09-07 14:02",
   "sourceStatus": "正常",
   "influenza": {
     "level": "流行中",
     "week": "第35週",
     "period": "8月24日～8月30日",
     "perSentinel": 2.65,
-    "previousPerSentinel": 1.49,
-    "difference": 1.16,
+    "previousPerSentinel": 2.65,
+    "difference": 0.0,
     "reportedCases": 1091,
     "sentinelCount": 411,
     "trend": "東京都公式週報",
@@ -32,7 +32,7 @@
       "active": false,
       "normalText": "情報なし",
       "alertText": "凍結注意",
-      "note": "予想最低気温 24℃"
+      "note": "今夜～明朝 24℃"
     }
   }
 }
