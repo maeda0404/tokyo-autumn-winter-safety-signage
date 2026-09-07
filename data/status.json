@@ -1,6 +1,6 @@
 {
-  "updated": "2026-09-07 08:53",
-  "sourceStatus": "正常",
+  "updated": "2026-09-07 13:32",
+  "sourceStatus": "一部取得失敗：感染症情報",
   "influenza": {
     "level": "流行中",
     "week": "第34週",
@@ -11,7 +11,7 @@
     "reportedCases": null,
     "trend": "東京都公式発表",
     "provisional": true,
-    "dataStatus": "取得成功",
+    "dataStatus": "取得失敗・前回値を維持",
     "sourceUrl": "https://www.metro.tokyo.lg.jp/information/press/2026/08/2026082720"
   },
   "weather": {
