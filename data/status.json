@@ -1,18 +1,19 @@
 {
-  "updated": "2026-09-07 13:40",
-  "sourceStatus": "一部取得失敗：感染症情報",
+  "updated": "2026-09-07 13:43",
+  "sourceStatus": "正常",
   "influenza": {
     "level": "流行中",
-    "week": "第34週",
-    "period": "8月17日～8月23日",
-    "perSentinel": 1.49,
-    "previousPerSentinel": null,
-    "difference": null,
-    "reportedCases": null,
-    "trend": "東京都公式発表",
+    "week": "第35週",
+    "period": "8月24日～8月30日",
+    "perSentinel": 2.65,
+    "previousPerSentinel": 1.49,
+    "difference": 1.16,
+    "reportedCases": 1091,
+    "sentinelCount": 411,
+    "trend": "東京都公式週報",
     "provisional": true,
-    "dataStatus": "取得失敗・前回値を維持",
-    "sourceUrl": "https://www.metro.tokyo.lg.jp/information/press/2026/08/2026082720"
+    "dataStatus": "取得成功",
+    "sourceUrl": "https://idsc.tmiph.metro.tokyo.lg.jp/assets/diseases/flu/2025/2025hasseidoko.xlsx"
   },
   "weather": {
     "wind": {
