@@ -200,99 +200,108 @@ def row_text(sheet, row_number, end_column=None):
     )
 
 
+def parse_week_header(value):
+    """36w / 第36週 / 36週 のような週見出しを数値へ変換する。"""
+    text = normalize(value).lower()
+    match = re.fullmatch(r"(?:第)?(\d{1,2})(?:w|週)", text)
+    if not match:
+        return None
+    week = int(match.group(1))
+    return week if 1 <= week <= 53 else None
+
+
 def find_latest_record(workbook):
+    """
+    東京都Excelの実構造を読む。
+    週は横方向、患者総数は total 行、定点数は 定点数 行にある。
+    定点当たり報告数 = total / 定点数。
+    """
     now = datetime.now(JST)
     candidates = []
 
     for sheet in workbook.worksheets:
-        max_row = sheet.max_row
-        max_column = sheet.max_column
+        header_row = None
+        week_columns = {}
 
-        # 縦型: 各行が週、列のどこかに「定点当たり」の値がある表
-        header_cells = []
-        for row in range(1, min(max_row, 50) + 1):
-            for column in range(1, max_column + 1):
-                text = normalize(sheet.cell(row=row, column=column).value)
-                score = 0
-                if "定点" in text:
-                    score += 5
-                if "当たり" in text:
-                    score += 5
-                if "報告数" in text:
-                    score += 3
-                if score >= 8:
-                    header_cells.append((score, row, column))
-
-        for _, header_row, value_column in sorted(header_cells, reverse=True):
-            current_year = now.year
-            for row in range(header_row + 1, max_row + 1):
-                value = number(sheet.cell(row=row, column=value_column).value)
-                if value is None or not 0 <= value <= 500:
-                    continue
-
-                week_info = None
-                context = row_text(sheet, row, min(max_column, max(value_column, 12)))
-                explicit = re.search(r"(20\d{2})年?第?(\d{1,2})週", context)
-                if explicit:
-                    week_info = (int(explicit.group(1)), int(explicit.group(2)))
-                else:
-                    simple = re.search(r"第(\d{1,2})週", context)
-                    if simple:
-                        week_info = (current_year, int(simple.group(1)))
-
-                if not week_info:
-                    continue
-                year, week = week_info
-                if 1 <= week <= 53 and now.year - 1 <= year <= now.year:
-                    candidates.append({
-                        "year": year,
-                        "week": week,
-                        "value": value,
-                        "sheet": sheet.title,
-                    })
-
-        # 横型: 列見出しが週で、行見出しが「定点当たり」の表
-        for header_row in range(1, min(max_row, 50) + 1):
-            week_columns = {}
-            for column in range(1, max_column + 1):
-                parsed = week_from_value(
-                    sheet.cell(row=header_row, column=column).value,
-                    now.year,
+        # 週見出しが最も多い行を採用する。
+        for row in range(1, min(sheet.max_row, 30) + 1):
+            found = {}
+            for column in range(1, sheet.max_column + 1):
+                week = parse_week_header(
+                    sheet.cell(row=row, column=column).value
                 )
-                if parsed and 1 <= parsed[1] <= 53:
-                    week_columns[column] = parsed
-            if not week_columns:
+                if week is not None:
+                    found[column] = week
+            if len(found) > len(week_columns):
+                header_row = row
+                week_columns = found
+
+        if not header_row or not week_columns:
+            continue
+
+        total_row = None
+        sentinel_row = None
+
+        for row in range(header_row + 1, sheet.max_row + 1):
+            label = normalize(sheet.cell(row=row, column=1).value).lower()
+            if label == "total" or label == "合計":
+                total_row = row
+            if "定点数" in label or "テイテンスウ" in label:
+                sentinel_row = row
+
+        if total_row is None or sentinel_row is None:
+            continue
+
+        # シーズンは36週から始まり、年をまたいで35週まで続く。
+        sheet_text = " ".join(
+            normalize(sheet.cell(row=r, column=c).value)
+            for r in range(1, min(sheet.max_row, 5) + 1)
+            for c in range(1, min(sheet.max_column, 8) + 1)
+        )
+        season_match = re.search(r"(20\d{2})[-－](\d{2})", sheet_text)
+        season_start_year = (
+            int(season_match.group(1))
+            if season_match
+            else now.year - 1
+        )
+
+        for column, week in week_columns.items():
+            total = number(sheet.cell(row=total_row, column=column).value)
+            sentinel_count = number(
+                sheet.cell(row=sentinel_row, column=column).value
+            )
+            if total is None or sentinel_count is None or sentinel_count <= 0:
                 continue
 
-            for row in range(header_row + 1, max_row + 1):
-                label = row_text(sheet, row, min(max_column, 12))
-                if "定点" not in label or "当たり" not in label:
-                    continue
-                for column, (year, week) in week_columns.items():
-                    value = number(sheet.cell(row=row, column=column).value)
-                    if value is not None and 0 <= value <= 500:
-                        candidates.append({
-                            "year": year,
-                            "week": week,
-                            "value": value,
-                            "sheet": sheet.title,
-                        })
+            year = season_start_year if week >= 36 else season_start_year + 1
+            per_sentinel = round(total / sentinel_count, 2)
+
+            # 公開済みの未来週を誤って選ばないよう、週末が現在以前のみ採用。
+            try:
+                week_end = date.fromisocalendar(year, week, 7)
+            except ValueError:
+                continue
+            if week_end > now.date():
+                continue
+
+            candidates.append({
+                "year": year,
+                "week": week,
+                "value": per_sentinel,
+                "reportedCases": int(total),
+                "sentinelCount": int(sentinel_count),
+                "sheet": sheet.title,
+            })
 
     if not candidates:
-        raise ValueError("Excelから最新週の定点当たり患者報告数を判定できません")
+        raise ValueError(
+            "Excelからtotal行・定点数行・最新週を判定できません"
+        )
 
     candidates.sort(key=lambda item: (item["year"], item["week"]))
-    latest_period = (candidates[-1]["year"], candidates[-1]["week"])
-    latest_candidates = [
-        item for item in candidates
-        if (item["year"], item["week"]) == latest_period
-    ]
-
-    # 同じ最新週に複数候補がある場合、東京都全体として妥当な候補を優先する。
-    # 候補値とシート名をログへ残し、取得元の検証を可能にする。
-    print("最新週候補:", latest_candidates)
-    return latest_candidates[0]
-
+    latest = candidates[-1]
+    print("採用した最新週:", latest)
+    return latest
 
 def iso_week_period(year, week):
     monday = date.fromisocalendar(year, week, 1)
@@ -330,7 +339,8 @@ def get_influenza_data(previous_status):
         "perSentinel": latest["value"],
         "previousPerSentinel": previous_value,
         "difference": difference,
-        "reportedCases": None,
+        "reportedCases": latest.get("reportedCases"),
+        "sentinelCount": latest.get("sentinelCount"),
         "trend": "東京都公式週報",
         "provisional": True,
         "dataStatus": "取得成功",
