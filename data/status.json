@@ -1,5 +1,5 @@
 {
-  "updated": "2026-09-07 19:26",
+  "updated": "2026-09-08 01:30",
   "sourceStatus": "正常",
   "influenza": {
     "level": "流行中",
@@ -32,7 +32,7 @@
       "active": false,
       "normalText": "情報なし",
       "alertText": "凍結注意",
-      "note": "今夜～明朝 23℃"
+      "note": "今夜～明朝 22℃"
     }
   }
 }
