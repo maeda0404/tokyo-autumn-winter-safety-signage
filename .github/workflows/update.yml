@@ -13,8 +13,9 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
+
       - name: Install Excel reader
-         run: pip install openpyxl
+        run: python -m pip install openpyxl
         
       - run: python scripts/update_status.py
       - run: |
