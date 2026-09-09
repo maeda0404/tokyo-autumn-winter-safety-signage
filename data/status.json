@@ -1,6 +1,6 @@
 {
-  "updated": "2026-09-10 04:49",
-  "sourceStatus": "一部取得失敗：警報注意報・気温予報・感染症情報",
+  "updated": "2026-09-10 07:36",
+  "sourceStatus": "正常",
   "influenza": {
     "level": "流行中",
     "week": "第35週",
@@ -12,7 +12,7 @@
     "sentinelCount": 411,
     "trend": "東京都公式週報",
     "provisional": true,
-    "dataStatus": "取得失敗・前回値を維持",
+    "dataStatus": "取得成功",
     "sourceUrl": "https://idsc.tmiph.metro.tokyo.lg.jp/assets/diseases/flu/2025/2025hasseidoko.xlsx"
   },
   "weather": {
@@ -32,7 +32,7 @@
       "active": false,
       "normalText": "情報なし",
       "alertText": "凍結注意",
-      "note": "今夜～明朝の最低気温を確認中"
+      "note": "今夜～明朝 18℃"
     }
   }
 }
