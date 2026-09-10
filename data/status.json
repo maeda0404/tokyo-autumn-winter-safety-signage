@@ -1,5 +1,5 @@
 {
-  "updated": "2026-09-10 07:36",
+  "updated": "2026-09-10 09:12",
   "sourceStatus": "正常",
   "influenza": {
     "level": "流行中",
@@ -33,6 +33,23 @@
       "normalText": "情報なし",
       "alertText": "凍結注意",
       "note": "今夜～明朝 18℃"
+    }
+  },
+  "debug": {
+    "warning": {
+      "windActive": false,
+      "dryActive": false,
+      "activeNames": [],
+      "reportDateTime": "2026-09-10T09:00:00+09:00",
+      "sourceFile": "20260910000123_0_VPWS50_010000.xml",
+      "sourceType": "VPWS50",
+      "emptyStatusAccepted": true,
+      "resultLocked": true
+    },
+    "cold": {
+      "targetDate": "2026-09-11",
+      "minimumTemperature": 18.0,
+      "source": "shortForecast00"
     }
   }
 }
