@@ -1,5 +1,5 @@
 {
-  "updated": "2026-09-14 01:24",
+  "updated": "2026-09-14 04:30",
   "sourceStatus": "正常",
   "influenza": {
     "level": "流行中",
@@ -17,7 +17,7 @@
   },
   "weather": {
     "wind": {
-      "active": false,
+      "active": true,
       "normalText": "情報なし",
       "alertText": "強風注意",
       "note": "飛散・揚重確認"
@@ -37,11 +37,13 @@
   },
   "debug": {
     "warning": {
-      "windActive": false,
+      "windActive": true,
       "dryActive": false,
-      "activeNames": [],
-      "reportDateTime": "2026-09-14T01:20:00+09:00",
-      "sourceFile": "20260913162100_0_VPWS50_010000.xml",
+      "activeNames": [
+        "強風注意報"
+      ],
+      "reportDateTime": "2026-09-14T04:20:00+09:00",
+      "sourceFile": "20260913192100_0_VPWS50_010000.xml",
       "sourceType": "VPWS50",
       "emptyStatusAccepted": true,
       "resultLocked": true
