@@ -1,13 +1,13 @@
 {
-  "updated": "2026-09-17 16:45",
+  "updated": "2026-09-17 22:33",
   "sourceStatus": "正常",
   "influenza": {
     "level": "流行中",
     "week": "第37週",
     "period": "9月8日～9月14日",
     "perSentinel": 9.53,
-    "previousPerSentinel": 5.46,
-    "difference": 4.07,
+    "previousPerSentinel": 9.53,
+    "difference": 0.0,
     "reportedCases": 3991,
     "sentinelCount": 419,
     "trend": "東京都公式週報",
@@ -17,7 +17,7 @@
   },
   "weather": {
     "wind": {
-      "active": false,
+      "active": true,
       "normalText": "情報なし",
       "alertText": "強風注意",
       "note": "飛散・揚重確認"
@@ -37,11 +37,13 @@
   },
   "debug": {
     "warning": {
-      "windActive": false,
+      "windActive": true,
       "dryActive": false,
-      "activeNames": [],
-      "reportDateTime": "2026-09-17T16:40:00+09:00",
-      "sourceFile": "20260917074053_0_VPWS50_010000.xml",
+      "activeNames": [
+        "強風注意報"
+      ],
+      "reportDateTime": "2026-09-17T22:30:00+09:00",
+      "sourceFile": "20260917133055_0_VPWS50_010000.xml",
       "sourceType": "VPWS50",
       "emptyStatusAccepted": true,
       "resultLocked": true
