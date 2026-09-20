@@ -1,5 +1,5 @@
 {
-  "updated": "2026-09-21 04:30",
+  "updated": "2026-09-21 07:30",
   "sourceStatus": "正常",
   "influenza": {
     "level": "流行中",
@@ -32,7 +32,7 @@
       "active": false,
       "normalText": "情報なし",
       "alertText": "凍結注意",
-      "note": "今夜～明朝 22℃"
+      "note": "今夜～明朝 24℃"
     }
   },
   "debug": {
@@ -42,16 +42,16 @@
       "activeNames": [
         "強風注意報"
       ],
-      "reportDateTime": "2026-09-21T04:20:00+09:00",
-      "sourceFile": "20260920192055_0_VPWS50_010000.xml",
+      "reportDateTime": "2026-09-21T07:20:00+09:00",
+      "sourceFile": "20260920222100_0_VPWS50_010000.xml",
       "sourceType": "VPWS50",
       "emptyStatusAccepted": true,
       "resultLocked": true
     },
     "cold": {
       "targetDate": "2026-09-22",
-      "minimumTemperature": 22.0,
-      "source": "weeklyTempsMin"
+      "minimumTemperature": 24.0,
+      "source": "shortForecast00"
     }
   }
 }
