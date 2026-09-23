@@ -1,6 +1,6 @@
 {
-  "updated": "2026-09-23 20:45",
-  "sourceStatus": "正常",
+  "updated": "2026-09-24 02:09",
+  "sourceStatus": "一部取得失敗：感染症情報",
   "influenza": {
     "level": "流行中",
     "week": "第37週",
@@ -12,7 +12,7 @@
     "sentinelCount": 419,
     "trend": "東京都公式週報",
     "provisional": true,
-    "dataStatus": "取得成功",
+    "dataStatus": "取得失敗・前回値を維持",
     "sourceUrl": "https://idsc.tmiph.metro.tokyo.lg.jp/assets/diseases/flu/2026/2026hasseidoko.xlsx"
   },
   "weather": {
@@ -32,7 +32,7 @@
       "active": false,
       "normalText": "情報なし",
       "alertText": "凍結注意",
-      "note": "今夜～明朝 19℃"
+      "note": "今夜～明朝 20℃"
     }
   },
   "debug": {
@@ -40,16 +40,16 @@
       "windActive": false,
       "dryActive": false,
       "activeNames": [],
-      "reportDateTime": "2026-09-23T20:40:00+09:00",
-      "sourceFile": "20260923114059_0_VPWS50_010000.xml",
+      "reportDateTime": "2026-09-24T02:00:00+09:00",
+      "sourceFile": "20260923170115_0_VPWS50_010000.xml",
       "sourceType": "VPWS50",
       "emptyStatusAccepted": true,
       "resultLocked": true
     },
     "cold": {
-      "targetDate": "2026-09-24",
-      "minimumTemperature": 19.0,
-      "source": "shortForecast00"
+      "targetDate": "2026-09-25",
+      "minimumTemperature": 20.0,
+      "source": "weeklyTempsMin"
     }
   }
 }
