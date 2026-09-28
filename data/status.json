@@ -1,13 +1,13 @@
 {
-  "updated": "2026-09-29 00:34",
+  "updated": "2026-09-29 07:06",
   "sourceStatus": "正常",
   "influenza": {
     "level": "注意報レベル",
     "week": "第38週",
     "period": "9月15日～9月21日",
     "perSentinel": 15.21,
-    "previousPerSentinel": 9.53,
-    "difference": 5.68,
+    "previousPerSentinel": 15.21,
+    "difference": 0.0,
     "reportedCases": 6281,
     "sentinelCount": 413,
     "trend": "東京都公式週報",
@@ -32,7 +32,7 @@
       "active": false,
       "normalText": "情報なし",
       "alertText": "凍結注意",
-      "note": "今夜～明朝 17℃"
+      "note": "今夜～明朝 18℃"
     }
   },
   "debug": {
@@ -40,16 +40,16 @@
       "windActive": false,
       "dryActive": false,
       "activeNames": [],
-      "reportDateTime": "2026-09-29T00:30:00+09:00",
-      "sourceFile": "20260928153052_0_VPWS50_010000.xml",
+      "reportDateTime": "2026-09-29T07:00:00+09:00",
+      "sourceFile": "20260928220127_0_VPWS50_010000.xml",
       "sourceType": "VPWS50",
       "emptyStatusAccepted": true,
       "resultLocked": true
     },
     "cold": {
       "targetDate": "2026-09-30",
-      "minimumTemperature": 17.0,
-      "source": "weeklyTempsMin"
+      "minimumTemperature": 18.0,
+      "source": "shortForecast00"
     }
   }
 }
