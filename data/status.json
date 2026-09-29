@@ -1,5 +1,5 @@
 {
-  "updated": "2026-09-30 00:57",
+  "updated": "2026-09-30 05:52",
   "sourceStatus": "正常",
   "influenza": {
     "level": "注意報レベル",
@@ -40,8 +40,8 @@
       "windActive": false,
       "dryActive": false,
       "activeNames": [],
-      "reportDateTime": "2026-09-30T00:50:00+09:00",
-      "sourceFile": "20260929155052_0_VPWS50_010000.xml",
+      "reportDateTime": "2026-09-30T05:50:00+09:00",
+      "sourceFile": "20260929205100_0_VPWS50_010000.xml",
       "sourceType": "VPWS50",
       "emptyStatusAccepted": true,
       "resultLocked": true
@@ -49,7 +49,7 @@
     "cold": {
       "targetDate": "2026-10-01",
       "minimumTemperature": 17.0,
-      "source": "weeklyTempsMin"
+      "source": "shortForecast00"
     }
   }
 }
