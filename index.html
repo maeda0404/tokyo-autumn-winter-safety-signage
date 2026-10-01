@@ -219,7 +219,7 @@
     .card {
       min-width: 0;
       min-height: 0;
-      border: clamp(3px, 0.65vmin, 5px) solid currentColor;
+      border: clamp(3px, 0.65vmin, 5px) solid var(--c);
       border-radius: var(--radius);
       padding: clamp(7px, 1.2vmin, 14px);
       display: flex;
@@ -228,6 +228,8 @@
       justify-content: center;
       text-align: center;
       overflow: hidden;
+      color: var(--c);
+      background: var(--bg);
       container-type: size;
     }
 
@@ -261,34 +263,79 @@
       white-space: normal;
     }
 
+    /* 「⚠ 発令中」バッジ：通常時は非表示 */
+    .card-badge {
+      display: none;
+      margin-bottom: clamp(4px, 0.8vmin, 9px);
+      margin-bottom: 3cqmin;
+      padding: 0.15em 0.7em;
+      border-radius: 999px;
+      background: #ffffff;
+      color: var(--c);
+      font-size: clamp(14px, 2.2vmin, 24px);
+      font-size: clamp(12px, 10cqmin, 40px);
+      font-weight: 900;
+      line-height: 1.2;
+      white-space: nowrap;
+      animation: blink 1s steps(1, end) infinite;
+    }
+
     .wind {
-      color: #1565c0;
-      background: #f3f8ff;
+      --c: #1565c0;
+      --bg: #f3f8ff;
     }
 
     .dry {
-      color: #dc5a00;
-      background: #fff8ee;
+      --c: #dc5a00;
+      --bg: #fff8ee;
     }
 
     .cold {
-      color: #008577;
-      background: #effcf9;
+      --c: #008577;
+      --bg: #effcf9;
     }
 
+    /* ===== 注意報・警報 発令中の表示 ===== */
     .card.active {
-      box-shadow: inset 0 0 0 clamp(1px, 0.3vmin, 3px) currentColor;
-      animation: pulse 2s ease-in-out infinite;
+      background: var(--c);
+      color: #ffffff;
+      border-color: #ffd600;
+      border-width: clamp(4px, 0.9vmin, 8px);
+      animation: alertPulse 1.6s ease-in-out infinite;
+    }
+
+    .card.active .card-badge {
+      display: inline-block;
+    }
+
+    .card.active .card-name {
+      color: #ffffff;
     }
 
     .card.active .card-state {
+      color: #ffd600;
       font-size: clamp(21px, 3.5vmin, 37px);
-      font-size: clamp(17px, 15cqmin, 60px);
+      font-size: clamp(17px, 16cqmin, 62px);
     }
 
-    @keyframes pulse {
+    .card.active .card-note {
+      color: #ffffff;
+    }
+
+    @keyframes alertPulse {
+      0%, 100% {
+        filter: brightness(1);
+        box-shadow: 0 0 0 0 rgba(255, 214, 0, 0.0);
+      }
       50% {
-        filter: brightness(0.94);
+        filter: brightness(1.12);
+        box-shadow: 0 0 0 clamp(2px, 0.5vmin, 5px) rgba(255, 214, 0, 0.7);
+      }
+    }
+
+    @keyframes blink {
+      50% {
+        opacity: 0.25;
       }
     }
 
@@ -340,8 +387,10 @@
       }
 
       .card-state,
-      .card-note {
+      .card-note,
+      .card-badge {
         margin-top: 0;
+        margin-bottom: 0;
       }
     }
 
@@ -398,18 +447,21 @@
 
     <section class="weather">
       <article class="card wind" id="windCard">
+        <div class="card-badge">⚠ 発令中</div>
         <div class="card-name">強風</div>
         <div class="card-state" id="windState">確認中</div>
         <div class="card-note" id="windNote"></div>
       </article>
 
       <article class="card dry" id="dryCard">
+        <div class="card-badge">⚠ 発令中</div>
         <div class="card-name">乾燥</div>
         <div class="card-state" id="dryState">確認中</div>
         <div class="card-note" id="dryNote"></div>
       </article>
 
       <article class="card cold" id="coldCard">
+        <div class="card-badge">⚠ 発令中</div>
         <div class="card-name">低温</div>
         <div class="card-state" id="coldState">確認中</div>
         <div class="card-note" id="coldNote"></div>
