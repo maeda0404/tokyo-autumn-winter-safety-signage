@@ -1,13 +1,13 @@
 {
-  "updated": "2026-10-01 22:26",
+  "updated": "2026-10-02 04:35",
   "sourceStatus": "正常",
   "influenza": {
     "level": "流行中",
     "week": "第39週",
     "period": "9月22日～9月28日",
     "perSentinel": 9.51,
-    "previousPerSentinel": 15.21,
-    "difference": -5.7,
+    "previousPerSentinel": 9.51,
+    "difference": 0.0,
     "reportedCases": 3965,
     "sentinelCount": 417,
     "trend": "東京都公式週報",
@@ -32,7 +32,7 @@
       "active": false,
       "normalText": "情報なし",
       "alertText": "凍結注意",
-      "note": "今夜～明朝 20℃"
+      "note": "今夜～明朝 17℃"
     }
   },
   "debug": {
@@ -40,16 +40,16 @@
       "windActive": false,
       "dryActive": false,
       "activeNames": [],
-      "reportDateTime": "2026-10-01T22:20:00+09:00",
-      "sourceFile": "20261001132100_0_VPWS50_010000.xml",
+      "reportDateTime": "2026-10-02T04:30:00+09:00",
+      "sourceFile": "20261001193054_0_VPWS50_010000.xml",
       "sourceType": "VPWS50",
       "emptyStatusAccepted": true,
       "resultLocked": true
     },
     "cold": {
-      "targetDate": "2026-10-02",
-      "minimumTemperature": 20.0,
-      "source": "shortForecast00"
+      "targetDate": "2026-10-03",
+      "minimumTemperature": 17.0,
+      "source": "weeklyTempsMin"
     }
   }
 }
