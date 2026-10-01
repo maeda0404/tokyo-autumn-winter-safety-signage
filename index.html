@@ -109,7 +109,7 @@
       min-height: 0;
       padding: clamp(7px, 1.35vmin, 14px);
       display: grid;
-      grid-template-columns: minmax(0, 0.75fr) minmax(0, 1.25fr);
+      grid-template-columns: minmax(0, 0.55fr) minmax(0, 1.45fr);
       align-items: center;
       gap: clamp(5px, 1vmin, 10px);
     }
@@ -124,43 +124,51 @@
     .flu-data {
       min-width: 0;
       display: grid;
-      grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
-      grid-template-rows: auto auto;
+      grid-template-columns: minmax(0, 1fr);
+      grid-template-rows: auto auto auto;
+      justify-items: center;
       align-items: center;
-      column-gap: clamp(8px, 1.5vmin, 18px);
-      row-gap: clamp(3px, 0.6vmin, 7px);
+      row-gap: clamp(3px, 0.8vmin, 9px);
     }
 
     .flu-level {
-      grid-row: 1 / 3;
+      width: 100%;
+      min-width: 0;
       text-align: center;
       color: var(--purple);
-      font-size: clamp(43px, 8.2vmin, 86px);
+      font-size: clamp(34px, 7.4vmin, 80px);
       font-weight: 900;
-      line-height: 0.95;
+      line-height: 1;
       white-space: nowrap;
+      overflow: hidden;
     }
 
     .sentinel-box {
+      width: 100%;
       min-width: 0;
-      text-align: center;
+      display: flex;
+      justify-content: center;
+      align-items: baseline;
+      gap: clamp(6px, 1.2vmin, 14px);
     }
 
     .sentinel-label {
-      font-size: clamp(15px, 2.2vmin, 24px);
+      flex-shrink: 0;
+      font-size: clamp(14px, 2.1vmin, 23px);
       font-weight: 900;
       line-height: 1.05;
       white-space: nowrap;
     }
 
     .sentinel-value {
-      margin-top: clamp(2px, 0.4vmin, 5px);
+      min-width: 0;
       color: #4e208d;
-      font-size: clamp(42px, 7.8vmin, 82px);
+      font-size: clamp(38px, 7vmin, 76px);
       font-weight: 900;
       line-height: 0.95;
       font-variant-numeric: tabular-nums;
       white-space: nowrap;
+      overflow: hidden;
     }
 
     .sentinel-unit {
@@ -169,6 +177,7 @@
     }
 
     .flu-meta {
+      width: 100%;
       text-align: center;
       font-size: clamp(14px, 2.1vmin, 23px);
       font-weight: 900;
@@ -307,7 +316,7 @@
       }
 
       .flu-data {
-        grid-template-columns: 1fr 1fr;
+        grid-template-columns: minmax(0, 1fr);
       }
 
       .weather {
@@ -410,6 +419,26 @@
 
     const DATA_URL = "./data/status.json";
 
+    // 枠からはみ出す場合、収まるまで文字サイズを1pxずつ小さくする
+    function fitText(element, minSize) {
+      if (!element) {
+        return;
+      }
+
+      element.style.fontSize = "";
+      let size = parseFloat(getComputedStyle(element).fontSize);
+
+      while (element.scrollWidth > element.clientWidth && size > minSize) {
+        size -= 1;
+        element.style.fontSize = size + "px";
+      }
+    }
+
+    function fitInfluenza() {
+      fitText(document.getElementById("fluLevel"), 16);
+      fitText(document.getElementById("perSentinel"), 16);
+    }
+
     function updateClock() {
       document.getElementById("clock").textContent =
         new Date().toLocaleTimeString("ja-JP", {
@@ -437,6 +466,7 @@
       const valueElement = document.getElementById("perSentinel");
       const metaElement = document.getElementById("fluMeta");
 
+      levelElement.classList.remove("error");
       levelElement.textContent = influenza.level || "確認中";
 
       const value = Number(influenza.perSentinel);
@@ -463,6 +493,8 @@
         metaParts.length > 0
           ? metaParts.join("　")
           : "最新情報を確認中";
+
+      fitInfluenza();
     }
 
     async function loadData() {
@@ -496,11 +528,15 @@
           "データ取得を確認してください";
         document.getElementById("footer").textContent =
           "データ更新を確認してください";
+
+        fitInfluenza();
       }
     }
 
     updateClock();
     setInterval(updateClock, 1000);
+
+    window.addEventListener("resize", fitInfluenza);
 
     loadData();
     setInterval(loadData, 10 * 60 * 1000);
