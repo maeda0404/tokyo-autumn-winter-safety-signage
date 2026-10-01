@@ -215,6 +215,7 @@
       gap: var(--gap);
     }
 
+    /* カード：枠の大きさに合わせて文字を伸縮させる（コンテナクエリ） */
     .card {
       min-width: 0;
       min-height: 0;
@@ -227,10 +228,13 @@
       justify-content: center;
       text-align: center;
       overflow: hidden;
+      container-type: size;
     }
 
+    /* 1行目：旧ブラウザ用の値　2行目：枠基準の値（対応ブラウザで上書き） */
     .card-name {
       font-size: clamp(29px, 5vmin, 52px);
+      font-size: clamp(22px, 24cqmin, 96px);
       font-weight: 900;
       line-height: 1;
       white-space: nowrap;
@@ -238,7 +242,9 @@
 
     .card-state {
       margin-top: clamp(6px, 1vmin, 11px);
+      margin-top: 4cqmin;
       font-size: clamp(19px, 3.1vmin, 32px);
+      font-size: clamp(16px, 14cqmin, 56px);
       font-weight: 900;
       line-height: 1.05;
       white-space: nowrap;
@@ -246,11 +252,13 @@
 
     .card-note {
       margin-top: clamp(4px, 0.7vmin, 8px);
+      margin-top: 3cqmin;
       color: #17212b;
       font-size: clamp(15px, 2.2vmin, 23px);
+      font-size: clamp(12px, 10cqmin, 40px);
       font-weight: 900;
-      line-height: 1.1;
-      white-space: nowrap;
+      line-height: 1.15;
+      white-space: normal;
     }
 
     .wind {
@@ -275,6 +283,7 @@
 
     .card.active .card-state {
       font-size: clamp(21px, 3.5vmin, 37px);
+      font-size: clamp(17px, 15cqmin, 60px);
     }
 
     @keyframes pulse {
@@ -336,7 +345,7 @@
       }
     }
 
-        @media screen and (max-height: 560px) {
+    @media screen and (max-height: 560px) {
       body {
         grid-template-rows: 48px minmax(0, 1fr) 26px;
         gap: 4px;
@@ -348,24 +357,6 @@
       .actions,
       .card {
         padding: 5px;
-      }
-
-      .card-name {
-        font-size: clamp(20px, 4.2vmin, 40px);
-      }
-
-      .card-state,
-      .card.active .card-state {
-        margin-top: 3px;
-        font-size: clamp(14px, 2.8vmin, 26px);
-      }
-
-      .card-note {
-        display: block;
-        margin-top: 2px;
-        font-size: clamp(11px, 2.2vmin, 18px);
-        white-space: normal;
-        line-height: 1.15;
       }
     }
   </style>
