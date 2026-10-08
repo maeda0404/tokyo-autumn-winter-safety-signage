@@ -1,13 +1,13 @@
 {
-  "updated": "2026-10-08 16:16",
+  "updated": "2026-10-08 16:31",
   "sourceStatus": "正常",
   "influenza": {
     "level": "注意報レベル",
     "week": "第40週",
     "period": "9月29日～10月5日",
     "perSentinel": 15.87,
-    "previousPerSentinel": 9.51,
-    "difference": 6.36,
+    "previousPerSentinel": 15.87,
+    "difference": 0.0,
     "reportedCases": 6619,
     "sentinelCount": 417,
     "trend": "東京都公式週報",
@@ -40,8 +40,8 @@
       "windActive": false,
       "dryActive": false,
       "activeNames": [],
-      "reportDateTime": "2026-10-08T16:10:00+09:00",
-      "sourceFile": "20261008071102_0_VPWS50_010000.xml",
+      "reportDateTime": "2026-10-08T16:30:00+09:00",
+      "sourceFile": "20261008073100_0_VPWS50_010000.xml",
       "sourceType": "VPWS50",
       "emptyStatusAccepted": true,
       "resultLocked": true
