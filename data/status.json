@@ -1,5 +1,5 @@
 {
-  "updated": "2026-10-09 04:46",
+  "updated": "2026-10-09 05:01",
   "sourceStatus": "正常",
   "influenza": {
     "level": "注意報レベル",
@@ -40,8 +40,8 @@
       "windActive": false,
       "dryActive": false,
       "activeNames": [],
-      "reportDateTime": "2026-10-09T04:40:00+09:00",
-      "sourceFile": "20261008194102_0_VPWS50_010000.xml",
+      "reportDateTime": "2026-10-09T04:50:00+09:00",
+      "sourceFile": "20261008195052_0_VPWS50_010000.xml",
       "sourceType": "VPWS50",
       "emptyStatusAccepted": true,
       "resultLocked": true
