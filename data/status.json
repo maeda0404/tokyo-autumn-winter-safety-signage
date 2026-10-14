@@ -1,5 +1,5 @@
 {
-  "updated": "2026-10-15 04:41",
+  "updated": "2026-10-15 04:46",
   "sourceStatus": "正常",
   "influenza": {
     "level": "注意報レベル",
@@ -32,7 +32,7 @@
       "active": false,
       "normalText": "情報なし",
       "alertText": "凍結注意",
-      "note": "今夜～明朝 16℃"
+      "note": "今夜～明朝 17℃"
     }
   },
   "debug": {
@@ -48,8 +48,8 @@
     },
     "cold": {
       "targetDate": "2026-10-16",
-      "minimumTemperature": 16.0,
-      "source": "weeklyTempsMin"
+      "minimumTemperature": 17.0,
+      "source": "shortForecast00"
     }
   }
 }
