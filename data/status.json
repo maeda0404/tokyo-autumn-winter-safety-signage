@@ -1,14 +1,14 @@
 {
-  "updated": "2026-11-19 16:01",
+  "updated": "2026-11-19 16:16",
   "sourceStatus": "正常",
   "influenza": {
     "level": "流行中",
-    "week": "第45週",
-    "period": "11月3日～11月9日",
-    "perSentinel": 7.44,
+    "week": "第46週",
+    "period": "11月10日～11月16日",
+    "perSentinel": 7.72,
     "previousPerSentinel": 7.44,
-    "difference": 0.0,
-    "reportedCases": 3117,
+    "difference": 0.28,
+    "reportedCases": 3234,
     "sentinelCount": 419,
     "trend": "東京都公式週報",
     "provisional": true,
@@ -42,8 +42,8 @@
       "activeNames": [
         "強風注意報"
       ],
-      "reportDateTime": "2026-11-19T15:50:00+09:00",
-      "sourceFile": "20261119065102_0_VPWS50_010000.xml",
+      "reportDateTime": "2026-11-19T16:10:00+09:00",
+      "sourceFile": "20261119071103_0_VPWS50_010000.xml",
       "sourceType": "VPWS50",
       "emptyStatusAccepted": true,
       "resultLocked": true
