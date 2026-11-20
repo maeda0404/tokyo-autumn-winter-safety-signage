@@ -1,5 +1,5 @@
 {
-  "updated": "2026-11-20 16:31",
+  "updated": "2026-11-20 16:46",
   "sourceStatus": "一部取得失敗：感染症情報",
   "influenza": {
     "level": "流行中",
@@ -29,10 +29,10 @@
       "note": "消火確認を徹底"
     },
     "cold": {
-      "active": true,
+      "active": false,
       "normalText": "情報なし",
       "alertText": "低温・凍結注意",
-      "note": "今夜～明朝 5℃"
+      "note": "今夜～明朝 6℃"
     }
   },
   "debug": {
@@ -42,15 +42,15 @@
       "activeNames": [
         "強風注意報"
       ],
-      "reportDateTime": "2026-11-20T16:20:00+09:00",
-      "sourceFile": "20261120072104_0_VPWS50_010000.xml",
+      "reportDateTime": "2026-11-20T16:40:00+09:00",
+      "sourceFile": "20261120074057_0_VPWS50_010000.xml",
       "sourceType": "VPWS50",
       "emptyStatusAccepted": true,
       "resultLocked": true
     },
     "cold": {
       "targetDate": "2026-11-21",
-      "minimumTemperature": 5.0,
+      "minimumTemperature": 6.0,
       "source": "shortForecast00"
     }
   }
