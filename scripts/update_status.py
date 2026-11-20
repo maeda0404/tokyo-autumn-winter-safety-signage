@@ -3,9 +3,9 @@
 京王笹塚 秋冬安全サイネージ用 status.json 生成スクリプト
 
 取得情報
-- 気象庁 VPWS50（集約定時通報）: 東京地方の強風注意報・暴風警報・乾燥注意報
-- 気象庁 府県天気予報: 今夜～明朝の最低気温
-- 東京都感染症情報センター: インフルエンザ定点当たり患者報告数
+気象庁 VPWS50（集約定時通報）: 東京地方の強風注意報・暴風警報・乾燥注意報
+気象庁 府県天気予報: 今夜～明朝の最低気温
+東京都感染症情報センター: インフルエンザ定点当たり患者報告数
 
 VPWS50を警報・注意報の主データとし、取得成功時はその結果を確定する。
 旧 warning/130000.json は使用しない。
@@ -43,7 +43,7 @@ TARGET_AREA_NAMES = {"東京地方"}
 TOKYO_POINT_CODE = "44132"
 
 DATA_URL_RE = re.compile(
-    r"https://www\.data\.jma\.go\.jp/developer/xml/data/"
+    r"https://www.data.jma.go.jp/developer/xml/data/"
     r"(\d{14})_\d+_([A-Z0-9]+)_(\d{6})\.xml"
 )
 
@@ -72,7 +72,7 @@ def fetch_bytes(url, retries=3):
             )
             with urllib.request.urlopen(request, timeout=30) as response:
                 raw = response.read()
-            return gzip.decompress(raw) if raw[:2] == b"\x1f\x8b" else raw
+                return gzip.decompress(raw) if raw[:2] == b"\x1f\x8b" else raw
         except Exception as error:
             last_error = error
             print(f"通信失敗 {attempt}/{retries}: {url}: {error}")
@@ -91,7 +91,7 @@ def fetch_json(url):
 
 def html_to_text(html):
     text = re.sub(r"<script[\s\S]*?</script>", " ", html, flags=re.IGNORECASE)
-    text = re.sub(r"<style[\s\S]*?</style>", " ", html, flags=re.IGNORECASE)
+    text = re.sub(r"<style[\s\S]*?</style>", " ", text, flags=re.IGNORECASE)
     text = re.sub(r"<[^>]+>", " ", text)
     return re.sub(r"\s+", " ", unescape(text)).strip()
 
@@ -171,7 +171,17 @@ def parse_vpws50(xml_bytes):
             if not name or status in INACTIVE_STATUSES:
                 continue
 
-            if any(word in name for word in ("強風注意報", "暴風警報", "暴風特別警報", "暴風雪警報", "暴風雪特別警報", "風雪注意報")):
+            if any(
+                word in name
+                for word in (
+                    "強風注意報",
+                    "暴風警報",
+                    "暴風特別警報",
+                    "暴風雪警報",
+                    "暴風雪特別警報",
+                    "風雪注意報",
+                )
+            ):
                 wind_active = True
                 active_names.append(name)
 
@@ -308,26 +318,32 @@ def find_latest_record(workbook):
     for sheet in workbook.worksheets:
         header_row = None
         week_columns = {}
+
         for row in range(1, min(sheet.max_row, 30) + 1):
             found = {}
             for column in range(1, sheet.max_column + 1):
                 week = parse_week_header(sheet.cell(row=row, column=column).value)
                 if week is not None:
                     found[column] = week
+
             if len(found) > len(week_columns):
                 header_row, week_columns = row, found
+
         if not header_row or not week_columns:
             continue
 
         total_row = None
         sentinel_row = None
+
         for row in range(header_row + 1, sheet.max_row + 1):
             row_labels = [
                 normalize(sheet.cell(row=row, column=column).value).lower()
                 for column in range(1, min(sheet.max_column, 8) + 1)
             ]
+
             if any(label in {"total", "合計"} for label in row_labels):
                 total_row = row
+
             if any("定点数" in label or "テイテンスウ" in label for label in row_labels):
                 sentinel_row = row
 
@@ -339,21 +355,27 @@ def find_latest_record(workbook):
             for row in range(1, min(sheet.max_row, 8) + 1)
             for column in range(1, min(sheet.max_column, 12) + 1)
         )
-        season_match = re.search(r"(20\d{2})[-－](\d{2})", sheet_text)
+
+        season_match = re.search(r"(20\d{2})-－", sheet_text)
         season_start_year = int(season_match.group(1)) if season_match else now.year - 1
 
         for column, week in week_columns.items():
             total = number(sheet.cell(row=total_row, column=column).value)
             points = number(sheet.cell(row=sentinel_row, column=column).value)
+
             if total is None or points is None or points <= 0:
                 continue
+
             year = season_start_year if week >= 36 else season_start_year + 1
+
             try:
                 week_end = date.fromisocalendar(year, week, 7)
             except ValueError:
                 continue
+
             if week_end > now.date():
                 continue
+
             candidates.append({
                 "year": year,
                 "week": week,
@@ -381,11 +403,13 @@ def iso_week_period(year, week):
 def get_influenza_data(previous_status):
     excel_url = find_flu_excel_url(fetch_text(FLU_TOP_URL))
     print("インフルエンザExcel:", excel_url)
+
     workbook = load_workbook(
         io.BytesIO(fetch_bytes(excel_url)),
         data_only=True,
         read_only=True,
     )
+
     try:
         latest = find_latest_record(workbook)
     finally:
@@ -393,6 +417,7 @@ def get_influenza_data(previous_status):
 
     previous_value = previous_status.get("influenza", {}).get("perSentinel")
     difference = None
+
     if previous_value is not None:
         try:
             difference = round(latest["value"] - float(previous_value), 2)
@@ -422,15 +447,19 @@ def main():
     now_text = datetime.now(JST).strftime("%Y-%m-%d %H:%M")
 
     warning_debug = None
+
     try:
         warning_debug = get_vpws50_weather_alerts()
         wind_active = warning_debug["windActive"]
         dry_active = warning_debug["dryActive"]
+
     except Exception as error:
         print("VPWS50取得エラー:", repr(error))
         errors.append("警報注意報")
+
         wind_active = previous_weather.get("wind", {}).get("active", False)
         dry_active = previous_weather.get("dry", {}).get("active", False)
+
         warning_debug = {
             "sourceType": VPWS50_TYPE,
             "error": type(error).__name__,
@@ -441,32 +470,51 @@ def main():
         minimum_temperature, minimum_date, temperature_source = (
             get_overnight_minimum_temperature()
         )
-        cold_active = minimum_temperature is not None and minimum_temperature <= 3
+
+        cold_active = (
+            minimum_temperature is not None
+            and minimum_temperature <= 5
+        )
+
         cold_note = (
             f"今夜～明朝 {minimum_temperature:g}℃"
             if minimum_temperature is not None
             else "今夜～明朝の最低気温を確認中"
         )
+
         cold_debug = {
             "targetDate": minimum_date.isoformat(),
             "minimumTemperature": minimum_temperature,
             "source": temperature_source,
         }
+
     except Exception as error:
         print("気温取得エラー:", repr(error))
         errors.append("気温予報")
+
         cold_active = previous_weather.get("cold", {}).get("active", False)
         cold_note = "今夜～明朝の最低気温を確認中"
-        cold_debug = {"error": type(error).__name__, "fallback": "previousStatus"}
+
+        cold_debug = {
+            "error": type(error).__name__,
+            "fallback": "previousStatus",
+        }
 
     try:
-        influenza = get_influenza_data(previous)
+        nfluenza_data(previous)
+
     except Exception as error:
         print("インフルエンザ取得エラー:", repr(error))
         errors.append("感染症情報")
+
         old = previous.get("influenza", {})
+
         if old.get("perSentinel") is not None:
-            influenza = {**old, "dataStatus": "取得失敗・前回値を維持"}
+            influenza = {
+                **old,
+                "dataStatus": "取得失敗・前回値を維持",
+            }
+
         else:
             influenza = {
                 "level": "確認中",
@@ -503,7 +551,7 @@ def main():
             "cold": {
                 "active": cold_active,
                 "normalText": "情報なし",
-                "alertText": "凍結注意",
+                "alertText": "低温・凍結注意",
                 "note": cold_note,
             },
         },
@@ -515,12 +563,15 @@ def main():
 
     STATUS_FILE.parent.mkdir(parents=True, exist_ok=True)
     temporary_file = STATUS_FILE.with_suffix(".tmp")
+
     temporary_file.write_text(
         json.dumps(status, ensure_ascii=False, indent=2) + "\n",
         encoding="utf-8",
     )
+
     json.loads(temporary_file.read_text(encoding="utf-8"))
     temporary_file.replace(STATUS_FILE)
+
     print(json.dumps(status, ensure_ascii=False, indent=2))
 
 
