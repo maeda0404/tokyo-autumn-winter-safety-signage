@@ -1,827 +1,1308 @@
 <!DOCTYPE html>
+
 <html lang="ja">
 
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>東京 秋冬安全情報</title>
 
-  <style>
-    :root {
-      --gap: clamp(5px, 1.05vmin, 10px);
-      --radius: clamp(9px, 1.5vmin, 16px);
-      --blue: #155eb5;
-      --purple: #7138ad;
-    }
+ <meta charset="UTF-8">
 
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      font-family: "Yu Gothic", "Meiryo", sans-serif;
-    }
+ <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    html,
-    body {
-      width: 100%;
-      height: 100%;
-      min-width: 0;
-      min-height: 0;
-      overflow: hidden;
-      background: #edf2f7;
-      color: #111111;
-    }
+ <title>東京 秋冬安全情報</title>
 
-    body {
-      padding: var(--gap);
-      display: grid;
-      grid-template-rows:
-        clamp(58px, 11.5vh, 88px)
-        minmax(0, 1fr)
-        clamp(32px, 6.5vh, 48px);
-      gap: var(--gap);
-    }
+ <style>
 
-    .header,
-    .footer {
-      border-radius: var(--radius);
-      display: flex;
-      align-items: center;
-    }
+ :root {
 
-    .header {
-      min-width: 0;
-      padding: 0 clamp(18px, 3vw, 34px);
-      justify-content: space-between;
-      gap: 12px;
-      background: var(--blue);
-      color: #ffffff;
-      font-size: clamp(23px, 3.9vmin, 42px);
-      font-weight: 900;
-      white-space: nowrap;
-      overflow: hidden;
-    }
+ --gap: clamp(5px, 1.05vmin, 10px);
 
-    .header-title {
-      min-width: 0;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
+ --radius: clamp(9px, 1.5vmin, 16px);
 
-    #clock {
-      flex-shrink: 0;
-      font-size: clamp(20px, 3.2vmin, 34px);
-      font-weight: 900;
-      font-variant-numeric: tabular-nums;
-    }
+ --blue: #155eb5;
 
-    main {
-      min-width: 0;
-      min-height: 0;
-      display: grid;
-      grid-template-rows: minmax(0, 1.22fr) minmax(0, 0.78fr);
-      gap: var(--gap);
-    }
+ --purple: #7138ad;
 
-    .flu {
-      min-width: 0;
-      min-height: 0;
-      border: clamp(3px, 0.65vmin, 5px) solid var(--purple);
-      border-radius: var(--radius);
-      background: #fbf7ff;
-      display: grid;
-      grid-template-rows: auto minmax(0, 1fr) auto;
-      overflow: hidden;
-    }
+ }
 
-    .panel-title {
-      padding: clamp(7px, 1.35vh, 13px);
-      background: var(--purple);
-      color: #ffffff;
-      text-align: center;
-      font-size: clamp(24px, 4vmin, 44px);
-      font-weight: 900;
-      line-height: 1;
-      white-space: nowrap;
-    }
+ * {
 
-    .flu-main {
-      min-width: 0;
-      min-height: 0;
-      padding: clamp(7px, 1.35vmin, 14px);
-      display: grid;
-      grid-template-columns: minmax(0, 0.55fr) minmax(0, 1.45fr);
-      align-items: center;
-      gap: clamp(5px, 1vmin, 10px);
-    }
+ box-sizing: border-box;
 
-    .flu-caption {
-      text-align: center;
-      font-size: clamp(21px, 3.4vmin, 37px);
-      font-weight: 900;
-      line-height: 1.2;
-    }
+ margin: 0;
 
-    .flu-data {
-      min-width: 0;
-      display: grid;
-      grid-template-columns: minmax(0, 1fr);
-      grid-template-rows: auto auto auto;
-      justify-items: center;
-      align-items: center;
-      row-gap: clamp(3px, 0.8vmin, 9px);
-    }
+ padding: 0;
 
-    .flu-level {
-      width: 100%;
-      min-width: 0;
-      text-align: center;
-      color: var(--purple);
-      font-size: clamp(34px, 7.4vmin, 80px);
-      font-weight: 900;
-      line-height: 1;
-      white-space: nowrap;
-      overflow: hidden;
-    }
+ font-family: "Yu Gothic", "Meiryo", sans-serif;
 
-    .sentinel-box {
-      width: 100%;
-      min-width: 0;
-      display: flex;
-      justify-content: center;
-      align-items: baseline;
-      gap: clamp(6px, 1.2vmin, 14px);
-    }
+ }
 
-    .sentinel-label {
-      flex-shrink: 0;
-      font-size: clamp(14px, 2.1vmin, 23px);
-      font-weight: 900;
-      line-height: 1.05;
-      white-space: nowrap;
-    }
+ html,
 
-    .sentinel-value {
-      min-width: 0;
-      color: #4e208d;
-      font-size: clamp(38px, 7vmin, 76px);
-      font-weight: 900;
-      line-height: 0.95;
-      font-variant-numeric: tabular-nums;
-      white-space: nowrap;
-      overflow: hidden;
-    }
+ body {
 
-    .sentinel-unit {
-      margin-left: 0.08em;
-      font-size: 0.48em;
-    }
+ width: 100%;
 
-    .flu-meta {
-      width: 100%;
-      text-align: center;
-      font-size: clamp(14px, 2.1vmin, 23px);
-      font-weight: 900;
-      line-height: 1.1;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
+ height: 100%;
 
-    .actions {
-      padding: clamp(6px, 1vmin, 10px);
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: var(--gap);
-      background: #eee2f8;
-    }
+ min-width: 0;
 
-    .action {
-      min-width: 0;
-      padding: clamp(7px, 1.1vmin, 12px) 3px;
-      background: #ffffff;
-      border-radius: 12px;
-      text-align: center;
-      font-size: clamp(18px, 2.8vmin, 30px);
-      font-weight: 900;
-      line-height: 1;
-      white-space: nowrap;
-    }
+ min-height: 0;
 
-    .weather {
-      min-width: 0;
-      min-height: 0;
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: var(--gap);
-    }
+ overflow: hidden;
 
-    .card {
-      min-width: 0;
-      min-height: 0;
-      border: clamp(3px, 0.65vmin, 5px) solid var(--c);
-      border-radius: var(--radius);
-      padding: clamp(7px, 1.2vmin, 14px);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      overflow: hidden;
-      color: var(--c);
-      background: var(--bg);
-      container-type: size;
-    }
+ background: #edf2f7;
 
-    .card-name {
-      font-size: clamp(29px, 5vmin, 52px);
-      font-size: clamp(22px, 24cqmin, 96px);
-      font-weight: 900;
-      line-height: 1;
-      white-space: nowrap;
-    }
+ color: #111111;
 
-    .card-state {
-      margin-top: clamp(6px, 1vmin, 11px);
-      margin-top: 4cqmin;
-      font-size: clamp(19px, 3.1vmin, 32px);
-      font-size: clamp(16px, 14cqmin, 56px);
-      font-weight: 900;
-      line-height: 1.05;
-      white-space: nowrap;
-    }
+ }
 
-    .card-note {
-      margin-top: clamp(4px, 0.7vmin, 8px);
-      margin-top: 3cqmin;
-      color: #17212b;
-      font-size: clamp(15px, 2.2vmin, 23px);
-      font-size: clamp(12px, 10cqmin, 40px);
-      font-weight: 900;
-      line-height: 1.15;
-      white-space: normal;
-    }
+ body {
 
-    /* 「⚠ 発令中」バッジ：通常時は非表示 */
-    .card-badge {
-      display: none;
-      margin-bottom: clamp(4px, 0.8vmin, 9px);
-      margin-bottom: 3cqmin;
-      padding: 0.15em 0.7em;
-      border-radius: 999px;
-      background: #ffffff;
-      color: var(--c);
-      font-size: clamp(14px, 2.2vmin, 24px);
-      font-size: clamp(12px, 10cqmin, 40px);
-      font-weight: 900;
-      line-height: 1.2;
-      white-space: nowrap;
-      animation: blink 1s steps(1, end) infinite;
-    }
+ padding: var(--gap);
 
-    .wind {
-      --c: #1565c0;
-      --bg: #f3f8ff;
-    }
+ display: grid;
 
-    .dry {
-      --c: #dc5a00;
-      --bg: #fff8ee;
-    }
+ grid-template-rows:
 
-    .cold {
-      --c: #008577;
-      --bg: #effcf9;
-    }
+ clamp(58px, 11.5vh, 88px)
 
-    /*
-     * 低温専用
-     * 5℃以下の場合は黄色枠だけで注意を示す。
-     * 背景反転・点滅・「発令中」表示は行わない。
-     */
-    .card.cold-active {
-      border-color: #ffd600;
-      border-width: clamp(4px, 0.9vmin, 8px);
-    }
+ minmax(0, 1fr)
 
-    /*
-     * 強風・乾燥の注意報発令中表示
-     */
-    .card.active {
-      background: var(--c);
-      color: #ffffff;
-      border-color: #ffd600;
-      border-width: clamp(4px, 0.9vmin, 8px);
-      animation: alertPulse 1.6s ease-in-out infinite;
-    }
+ clamp(32px, 6.5vh, 48px);
 
-    .card.active .card-badge {
-      display: inline-block;
-    }
+ gap: var(--gap);
 
-    .card.active .card-name {
-      color: #ffffff;
-    }
+ }
 
-    .card.active .card-state {
-      color: #ffd600;
-      font-size: clamp(21px, 3.5vmin, 37px);
-      font-size: clamp(17px, 16cqmin, 62px);
-    }
+ .header,
 
-    .card.active .card-note {
-      color: #ffffff;
-    }
+ .footer {
 
-    @keyframes alertPulse {
-      0%,
-      100% {
-        filter: brightness(1);
-        box-shadow: 0 0 0 0 rgba(255, 214, 0, 0.0);
-      }
+ border-radius: var(--radius);
 
-      50% {
-        filter: brightness(1.12);
-        box-shadow: 0 0 0 clamp(2px, 0.5vmin, 5px) rgba(255, 214, 0, 0.7);
-      }
-    }
+ display: flex;
 
-    @keyframes blink {
-      50% {
-        opacity: 0.25;
-      }
-    }
+ align-items: center;
 
-    .footer {
-      min-width: 0;
-      justify-content: center;
-      padding: 0 10px;
-      background: #ffffff;
-      color: #3e4954;
-      font-size: clamp(13px, 2vmin, 21px);
-      font-weight: 900;
-      line-height: 1;
-      text-align: center;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
+ }
 
-    .error {
-      color: #b00020 !important;
-    }
+ .header {
 
-    @media screen and (max-aspect-ratio: 4 / 5) {
-      main {
-        grid-template-rows: minmax(0, 1fr) minmax(0, 1.45fr);
-      }
+ min-width: 0;
 
-      .flu-main {
-        grid-template-columns: 1fr;
-      }
+ padding: 0 clamp(18px, 3vw, 34px);
 
-      .flu-caption br {
-        display: none;
-      }
+ justify-content: space-between;
 
-      .flu-data {
-        grid-template-columns: minmax(0, 1fr);
-      }
+ gap: 12px;
 
-      .weather {
-        grid-template-columns: 1fr;
-        grid-template-rows: repeat(3, minmax(0, 1fr));
-      }
+ background: var(--blue);
 
-      .card {
-        flex-direction: row;
-        justify-content: space-between;
-        gap: 10px;
-      }
+ color: #ffffff;
 
-      .card-state,
-      .card-note,
-      .card-badge {
-        margin-top: 0;
-        margin-bottom: 0;
-      }
-    }
+ font-size: clamp(23px, 3.9vmin, 42px);
 
-    @media screen and (max-height: 560px) {
-      body {
-        grid-template-rows: 48px minmax(0, 1fr) 26px;
-        gap: 4px;
-        padding: 4px;
-      }
+ font-weight: 900;
 
-      .panel-title,
-      .flu-main,
-      .actions,
-      .card {
-        padding: 5px;
-      }
-    }
-  </style>
+ white-space: nowrap;
+
+ overflow: hidden;
+
+ }
+
+ .header-title {
+
+ min-width: 0;
+
+ overflow: hidden;
+
+ text-overflow: ellipsis;
+
+ }
+
+ #clock {
+
+ flex-shrink: 0;
+
+ font-size: clamp(20px, 3.2vmin, 34px);
+
+ font-weight: 900;
+
+ font-variant-numeric: tabular-nums;
+
+ }
+
+ main {
+
+ min-width: 0;
+
+ min-height: 0;
+
+ display: grid;
+
+ grid-template-rows: minmax(0, 1.22fr) minmax(0, 0.78fr);
+
+ gap: var(--gap);
+
+ }
+
+ .flu {
+
+ min-width: 0;
+
+ min-height: 0;
+
+ border: clamp(3px, 0.65vmin, 5px) solid var(--purple);
+
+ border-radius: var(--radius);
+
+ background: #fbf7ff;
+
+ display: grid;
+
+ grid-template-rows: auto minmax(0, 1fr) auto;
+
+ overflow: hidden;
+
+ }
+
+ .panel-title {
+
+ padding: clamp(7px, 1.35vh, 13px);
+
+ background: var(--purple);
+
+ color: #ffffff;
+
+ text-align: center;
+
+ font-size: clamp(24px, 4vmin, 44px);
+
+ font-weight: 900;
+
+ line-height: 1;
+
+ white-space: nowrap;
+
+ }
+
+ .flu-main {
+
+ min-width: 0;
+
+ min-height: 0;
+
+ padding: clamp(7px, 1.35vmin, 14px);
+
+ display: grid;
+
+ grid-template-columns: minmax(0, 0.55fr) minmax(0, 1.45fr);
+
+ align-items: center;
+
+ gap: clamp(5px, 1vmin, 10px);
+
+ }
+
+ .flu-caption {
+
+ text-align: center;
+
+ font-size: clamp(21px, 3.4vmin, 37px);
+
+ font-weight: 900;
+
+ line-height: 1.2;
+
+ }
+
+ .flu-data {
+
+ min-width: 0;
+
+ display: grid;
+
+ grid-template-columns: minmax(0, 1fr);
+
+ grid-template-rows: auto auto auto;
+
+ justify-items: center;
+
+ align-items: center;
+
+ row-gap: clamp(3px, 0.8vmin, 9px);
+
+ }
+
+ .flu-level {
+
+ width: 100%;
+
+ min-width: 0;
+
+ text-align: center;
+
+ color: var(--purple);
+
+ font-size: clamp(34px, 7.4vmin, 80px);
+
+ font-weight: 900;
+
+ line-height: 1;
+
+ white-space: nowrap;
+
+ overflow: hidden;
+
+ }
+
+ .sentinel-box {
+
+ width: 100%;
+
+ min-width: 0;
+
+ display: flex;
+
+ justify-content: center;
+
+ align-items: baseline;
+
+ gap: clamp(6px, 1.2vmin, 14px);
+
+ }
+
+ .sentinel-label {
+
+ flex-shrink: 0;
+
+ font-size: clamp(14px, 2.1vmin, 23px);
+
+ font-weight: 900;
+
+ line-height: 1.05;
+
+ white-space: nowrap;
+
+ }
+
+ .sentinel-value {
+
+ min-width: 0;
+
+ color: #4e208d;
+
+ font-size: clamp(38px, 7vmin, 76px);
+
+ font-weight: 900;
+
+ line-height: 0.95;
+
+ font-variant-numeric: tabular-nums;
+
+ white-space: nowrap;
+
+ overflow: hidden;
+
+ }
+
+ .sentinel-unit {
+
+ margin-left: 0.08em;
+
+ font-size: 0.48em;
+
+ }
+
+ .flu-meta {
+
+ width: 100%;
+
+ text-align: center;
+
+ font-size: clamp(14px, 2.1vmin, 23px);
+
+ font-weight: 900;
+
+ line-height: 1.1;
+
+ white-space: nowrap;
+
+ overflow: hidden;
+
+ text-overflow: ellipsis;
+
+ }
+
+ .actions {
+
+ padding: clamp(6px, 1vmin, 10px);
+
+ display: grid;
+
+ grid-template-columns: repeat(3, minmax(0, 1fr));
+
+ gap: var(--gap);
+
+ background: #eee2f8;
+
+ }
+
+ .action {
+
+ min-width: 0;
+
+ padding: clamp(7px, 1.1vmin, 12px) 3px;
+
+ background: #ffffff;
+
+ border-radius: 12px;
+
+ text-align: center;
+
+ font-size: clamp(18px, 2.8vmin, 30px);
+
+ font-weight: 900;
+
+ line-height: 1;
+
+ white-space: nowrap;
+
+ }
+
+ .weather {
+
+ min-width: 0;
+
+ min-height: 0;
+
+ display: grid;
+
+ grid-template-columns: repeat(3, minmax(0, 1fr));
+
+ gap: var(--gap);
+
+ }
+
+ .card {
+
+ min-width: 0;
+
+ min-height: 0;
+
+ border: clamp(3px, 0.65vmin, 5px) solid var(--c);
+
+ border-radius: var(--radius);
+
+ padding: clamp(7px, 1.2vmin, 14px);
+
+ display: flex;
+
+ flex-direction: column;
+
+ align-items: center;
+
+ justify-content: center;
+
+ text-align: center;
+
+ overflow: hidden;
+
+ color: var(--c);
+
+ background: var(--bg);
+
+ container-type: size;
+
+ }
+
+ .card-name {
+
+ font-size: clamp(29px, 5vmin, 52px);
+
+ font-size: clamp(22px, 24cqmin, 96px);
+
+ font-weight: 900;
+
+ line-height: 1;
+
+ white-space: nowrap;
+
+ }
+
+ .card-state {
+
+ margin-top: clamp(6px, 1vmin, 11px);
+
+ margin-top: 4cqmin;
+
+ font-size: clamp(19px, 3.1vmin, 32px);
+
+ font-size: clamp(16px, 14cqmin, 56px);
+
+ font-weight: 900;
+
+ line-height: 1.05;
+
+ white-space: nowrap;
+
+ }
+
+ .card-note {
+
+ margin-top: clamp(4px, 0.7vmin, 8px);
+
+ margin-top: 3cqmin;
+
+ color: #17212b;
+
+ font-size: clamp(15px, 2.2vmin, 23px);
+
+ font-size: clamp(12px, 10cqmin, 40px);
+
+ font-weight: 900;
+
+ line-height: 1.15;
+
+ white-space: normal;
+
+ }
+
+ /* 「⚠ 発令中」バッジ：通常時は非表示 */
+
+ .card-badge {
+
+ display: none;
+
+ margin-bottom: clamp(4px, 0.8vmin, 9px);
+
+ margin-bottom: 3cqmin;
+
+ padding: 0.15em 0.7em;
+
+ border-radius: 999px;
+
+ background: #ffffff;
+
+ color: var(--c);
+
+ font-size: clamp(14px, 2.2vmin, 24px);
+
+ font-size: clamp(12px, 10cqmin, 40px);
+
+ font-weight: 900;
+
+ line-height: 1.2;
+
+ white-space: nowrap;
+
+ animation: blink 1s steps(1, end) infinite;
+
+ }
+
+ .wind {
+
+ --c: #1565c0;
+
+ --bg: #f3f8ff;
+
+ }
+
+ .dry {
+
+ --c: #dc5a00;
+
+ --bg: #fff8ee;
+
+ }
+
+ .cold {
+
+ --c: #008577;
+
+ --bg: #effcf9;
+
+ }
+
+ /*
+  * 低温専用
+  * 5℃以下の場合は黄色枠＋濃い緑背景で注意を示す。
+  * 文字の色・サイズは通常時の設定をそのまま使用。
+  * 点滅・「発令中」表示は行わない。
+  */
+
+ .card.cold-active {
+
+ background: #00695c;
+
+ border-color: #ffd600;
+
+ border-width: clamp(4px, 0.9vmin, 8px);
+
+ }
+
+ /*
+  * 強風・乾燥の注意報発令中表示
+  */
+
+ .card.active {
+
+ background: var(--c);
+
+ color: #ffffff;
+
+ border-color: #ffd600;
+
+ border-width: clamp(4px, 0.9vmin, 8px);
+
+ animation: alertPulse 1.6s ease-in-out infinite;
+
+ }
+
+ .card.active .card-badge {
+
+ display: inline-block;
+
+ }
+
+ .card.active .card-name {
+
+ color: #ffffff;
+
+ }
+
+ .card.active .card-state {
+
+ color: #ffd600;
+
+ font-size: clamp(21px, 3.5vmin, 37px);
+
+ font-size: clamp(17px, 16cqmin, 62px);
+
+ }
+
+ .card.active .card-note {
+
+ color: #ffffff;
+
+ }
+
+ @keyframes alertPulse {
+
+ 0%,
+
+ 100% {
+
+ filter: brightness(1);
+
+ box-shadow: 0 0 0 0 rgba(255, 214, 0, 0.0);
+
+ }
+
+ 50% {
+
+ filter: brightness(1.12);
+
+ box-shadow: 0 0 0 clamp(2px, 0.5vmin, 5px) rgba(255, 214, 0, 0.7);
+
+ }
+
+ }
+
+ @keyframes blink {
+
+ 50% {
+
+ opacity: 0.25;
+
+ }
+
+ }
+
+ .footer {
+
+ min-width: 0;
+
+ justify-content: center;
+
+ padding: 0 10px;
+
+ background: #ffffff;
+
+ color: #3e4954;
+
+ font-size: clamp(13px, 2vmin, 21px);
+
+ font-weight: 900;
+
+ line-height: 1;
+
+ text-align: center;
+
+ white-space: nowrap;
+
+ overflow: hidden;
+
+ text-overflow: ellipsis;
+
+ }
+
+ .error {
+
+ color: #b00020 !important;
+
+ }
+
+ @media screen and (max-aspect-ratio: 4 / 5) {
+
+ main {
+
+ grid-template-rows: minmax(0, 1fr) minmax(0, 1.45fr);
+
+ }
+
+ .flu-main {
+
+ grid-template-columns: 1fr;
+
+ }
+
+ .flu-caption br {
+
+ display: none;
+
+ }
+
+ .flu-data {
+
+ grid-template-columns: minmax(0, 1fr);
+
+ }
+
+ .weather {
+
+ grid-template-columns: 1fr;
+
+ grid-template-rows: repeat(3, minmax(0, 1fr));
+
+ }
+
+ .card {
+
+ flex-direction: row;
+
+ justify-content: space-between;
+
+ gap: 10px;
+
+ }
+
+ .card-state,
+
+ .card-note,
+
+ .card-badge {
+
+ margin-top: 0;
+
+ margin-bottom: 0;
+
+ }
+
+ }
+
+ @media screen and (max-height: 560px) {
+
+ body {
+
+ grid-template-rows: 48px minmax(0, 1fr) 26px;
+
+ gap: 4px;
+
+ padding: 4px;
+
+ }
+
+ .panel-title,
+
+ .flu-main,
+
+ .actions,
+
+ .card {
+
+ padding: 5px;
+
+ }
+
+ }
+
+ </style>
+
 </head>
 
 <body>
 
-  <header class="header">
-    <div class="header-title">東京　秋冬安全情報</div>
-    <div id="clock">--:--:--</div>
-  </header>
+ <header class="header">
 
-  <main>
+ <div class="header-title">東京　秋冬安全情報</div>
 
-    <section class="flu">
+ <div id="clock">--:--:--</div>
 
-      <div class="panel-title">
-        インフルエンザ情報
-      </div>
+ </header>
 
-      <div class="flu-main">
+ <main>
 
-        <div class="flu-caption">
-          東京都の<br>流行状況
-        </div>
+ <section class="flu">
 
-        <div class="flu-data">
+ <div class="panel-title">
 
-          <div class="flu-level" id="fluLevel">
-            確認中
-          </div>
+ インフルエンザ情報
 
-          <div class="sentinel-box">
+ </div>
 
-            <div class="sentinel-label">
-              定点当たり報告数
-            </div>
+ <div class="flu-main">
 
-            <div class="sentinel-value" id="perSentinel">
-              --<span class="sentinel-unit">人</span>
-            </div>
+ <div class="flu-caption">
 
-          </div>
+ 東京都の<br>流行状況
 
-          <div class="flu-meta" id="fluMeta">
-            データ取得中
-          </div>
+ </div>
 
-        </div>
+ <div class="flu-data">
 
-      </div>
+ <div class="flu-level" id="fluLevel">
 
-      <div class="actions">
-        <div class="action">手洗い</div>
-        <div class="action">換気</div>
-        <div class="action">体調報告</div>
-      </div>
+ 確認中
 
-    </section>
+ </div>
 
-    <section class="weather">
+ <div class="sentinel-box">
 
-      <article class="card wind" id="windCard">
+ <div class="sentinel-label">
 
-        <div class="card-badge">
-          ⚠ 発令中
-        </div>
+ 定点当たり報告数
 
-        <div class="card-name">
-          強風
-        </div>
+ </div>
 
-        <div class="card-state" id="windState">
-          確認中
-        </div>
+ <div class="sentinel-value" id="perSentinel">
 
-        <div class="card-note" id="windNote"></div>
+ --<span class="sentinel-unit">人</span>
 
-      </article>
+ </div>
 
-      <article class="card dry" id="dryCard">
+ </div>
 
-        <div class="card-badge">
-          ⚠ 発令中
-        </div>
+ <div class="flu-meta" id="fluMeta">
 
-        <div class="card-name">
-          乾燥
-        </div>
+ データ取得中
 
-        <div class="card-state" id="dryState">
-          確認中
-        </div>
+ </div>
 
-        <div class="card-note" id="dryNote"></div>
+ </div>
 
-      </article>
+ </div>
 
-      <article class="card cold" id="coldCard">
+ <div class="actions">
 
-        <!--
-          低温は独自基準（5℃以下）のため、
-          「⚠ 発令中」バッジは設置しない
-        -->
+ <div class="action">手洗い</div>
 
-        <div class="card-name">
-          低温
-        </div>
+ <div class="action">換気</div>
 
-        <div class="card-state" id="coldState">
-          確認中
-        </div>
+ <div class="action">体調報告</div>
 
-        <div class="card-note" id="coldNote"></div>
+ </div>
 
-      </article>
+ </section>
 
-    </section>
+ <section class="weather">
 
-  </main>
+ <article class="card wind" id="windCard">
 
-  <footer class="footer" id="footer">
-    データを読み込んでいます
-  </footer>
+ <div class="card-badge">
 
-  <script>
-    "use strict";
+ ⚠ 発令中
 
-    const DATA_URL = "./data/status.json";
+ </div>
 
-    // 枠からはみ出す場合、収まるまで文字サイズを1pxずつ小さくする
-    function fitText(element, minSize) {
+ <div class="card-name">
 
-      if (!element) {
-        return;
-      }
+ 強風
 
-      element.style.fontSize = "";
+ </div>
 
-      let size = parseFloat(
-        getComputedStyle(element).fontSize
-      );
+ <div class="card-state" id="windState">
 
-      while (
-        element.scrollWidth > element.clientWidth &&
-        size > minSize
-      ) {
-        size -= 1;
-        element.style.fontSize = size + "px";
-      }
-    }
+ 確認中
 
+ </div>
 
-    function fitInfluenza() {
+ <div class="card-note" id="windNote"></div>
 
-      fitText(
-        document.getElementById("fluLevel"),
-        16
-      );
+ </article>
 
-      fitText(
-        document.getElementById("perSentinel"),
-        16
-      );
-    }
+ <article class="card dry" id="dryCard">
 
+ <div class="card-badge">
 
-    function updateClock() {
+ ⚠ 発令中
 
-      document.getElementById("clock").textContent =
-        new Date().toLocaleTimeString(
-          "ja-JP",
-          {
-            hour: "2-digit",
-            minute: "2-digit",
-            second: "2-digit",
-            hour12: false
-          }
-        );
-    }
+ </div>
 
+ <div class="card-name">
 
-    function displayCard(key, item) {
+ 乾燥
 
-      const card =
-        document.getElementById(key + "Card");
+ </div>
 
-      const stateElement =
-        document.getElementById(key + "State");
+ <div class="card-state" id="dryState">
 
-      const noteElement =
-        document.getElementById(key + "Note");
+ 確認中
 
-      if (!card || !stateElement || !noteElement) {
-        return;
-      }
+ </div>
 
-      item = item || {};
+ <div class="card-note" id="dryNote"></div>
 
-      stateElement.textContent =
-        item.active
-          ? (item.alertText || "注意")
-          : (item.normalText || "情報なし");
+ </article>
 
-      noteElement.textContent =
-        item.note || "";
+ <article class="card cold" id="coldCard">
 
-      /*
-       * 低温だけ表示方法を分離。
-       *
-       * active = true
-       * → 黄色枠
-       * → 「低温・凍結注意」を表示
-       *
-       * 点滅なし
-       * 背景反転なし
-       * 「⚠ 発令中」なし
-       */
-      if (key === "cold") {
+ <!--
+ 低温は独自基準（5℃以下）のため、
+ 「⚠ 発令中」バッジは設置しない
+ -->
 
-        card.classList.remove("active");
+ <div class="card-name">
 
-        card.classList.toggle(
-          "cold-active",
-          Boolean(item.active)
-        );
+ 低温
 
-        return;
-      }
+ </div>
 
-      /*
-       * 強風・乾燥
-       *
-       * 気象庁の注意報等が有効なら
-       * 従来どおりactive表示
-       */
-      card.classList.remove("cold-active");
+ <div class="card-state" id="coldState">
 
-      card.classList.toggle(
-        "active",
-        Boolean(item.active)
-      );
-    }
+ 確認中
 
+ </div>
 
-    function displayInfluenza(influenza) {
+ <div class="card-note" id="coldNote"></div>
 
-      const levelElement =
-        document.getElementById("fluLevel");
+ </article>
 
-      const valueElement =
-        document.getElementById("perSentinel");
+ </section>
 
-      const metaElement =
-        document.getElementById("fluMeta");
+ </main>
 
-      levelElement.classList.remove("error");
+ <footer class="footer" id="footer">
 
-      levelElement.textContent =
-        influenza.level || "確認中";
+ データを読み込んでいます
 
-      const value =
-        Number(influenza.perSentinel);
+ </footer>
 
-      if (Number.isFinite(value)) {
+ <script>
 
-        valueElement.innerHTML =
-          value.toFixed(2) +
-          '<span class="sentinel-unit">人</span>';
+ "use strict";
 
-      } else {
+ const DATA_URL = "./data/status.json";
 
-        valueElement.innerHTML =
-          '--<span class="sentinel-unit">人</span>';
-      }
+ // 枠からはみ出す場合、収まるまで文字サイズを1pxずつ小さくする
 
-      const metaParts = [];
+ function fitText(element, minSize) {
 
-      if (influenza.week) {
-        metaParts.push(influenza.week);
-      }
+ if (!element) {
 
-      if (
-        influenza.period &&
-        influenza.period !== "東京都"
-      ) {
-        metaParts.push(influenza.period);
-      }
+ return;
 
-      metaElement.textContent =
-        metaParts.length > 0
-          ? metaParts.join("　")
-          : "最新情報を確認中";
+ }
 
-      fitInfluenza();
-    }
+ element.style.fontSize = "";
 
+ let size = parseFloat(
 
-    async function loadData() {
+ getComputedStyle(element).fontSize
 
-      try {
+ );
 
-        const response = await fetch(
-          DATA_URL + "?t=" + Date.now(),
-          {
-            cache: "no-store"
-          }
-        );
+ while (
 
-        if (!response.ok) {
-          throw new Error(
-            "status.json HTTP " +
-            response.status
-          );
-        }
+ element.scrollWidth > element.clientWidth &&
 
-        const data =
-          await response.json();
+ size > minSize
 
-        displayInfluenza(
-          data.influenza || {}
-        );
+ ) {
 
-        const weather =
-          data.weather || {};
+ size -= 1;
 
-        displayCard(
-          "wind",
-          weather.wind || {}
-        );
+ element.style.fontSize = size + "px";
 
-        displayCard(
-          "dry",
-          weather.dry || {}
-        );
+ }
 
-        displayCard(
-          "cold",
-          weather.cold || {}
-        );
+ }
 
-        document.getElementById(
-          "footer"
-        ).textContent =
-          "更新：" +
-          (data.updated || "--") +
-          "　" +
-          (data.sourceStatus || "");
 
-      } catch (error) {
+ function fitInfluenza() {
 
-        console.error(error);
+ fitText(
 
-        document.getElementById(
-          "fluLevel"
-        ).textContent =
-          "取得失敗";
+ document.getElementById("fluLevel"),
 
-        document.getElementById(
-          "fluLevel"
-        ).classList.add(
-          "error"
-        );
+ 16
 
-        document.getElementById(
-          "perSentinel"
-        ).innerHTML =
-          '--<span class="sentinel-unit">人</span>';
+ );
 
-        document.getElementById(
-          "fluMeta"
-        ).textContent =
-          "データ取得を確認してください";
+ fitText(
 
-        document.getElementById(
-          "footer"
-        ).textContent =
-          "データ更新を確認してください";
+ document.getElementById("perSentinel"),
 
-        fitInfluenza();
-      }
-    }
+ 16
 
+ );
 
-    updateClock();
+ }
 
-    setInterval(
-      updateClock,
-      1000
-    );
 
-    window.addEventListener(
-      "resize",
-      fitInfluenza
-    );
+ function updateClock() {
 
-    loadData();
+ document.getElementById("clock").textContent =
 
-    setInterval(
-      loadData,
-      10 * 60 * 1000
-    );
-  </script>
+ new Date().toLocaleTimeString(
+
+ "ja-JP",
+
+ {
+
+ hour: "2-digit",
+
+ minute: "2-digit",
+
+ second: "2-digit",
+
+ hour12: false
+
+ }
+
+ );
+
+ }
+
+
+ function displayCard(key, item) {
+
+ const card =
+
+ document.getElementById(key + "Card");
+
+ const stateElement =
+
+ document.getElementById(key + "State");
+
+ const noteElement =
+
+ document.getElementById(key + "Note");
+
+ if (!card || !stateElement || !noteElement) {
+
+ return;
+
+ }
+
+ item = item || {};
+
+ stateElement.textContent =
+
+ item.active
+
+ ? (item.alertText || "注意")
+
+ : (item.normalText || "情報なし");
+
+ noteElement.textContent =
+
+ item.note || "";
+
+ /*
+  * 低温だけ表示方法を分離。
+  *
+  * active = true
+  * → 黄色枠
+  * → 濃い緑背景
+  * → 「低温・凍結注意」を表示
+  *
+  * 文字設定は変更しない
+  * 点滅なし
+  * 「⚠ 発令中」なし
+  */
+
+ if (key === "cold") {
+
+ card.classList.remove("active");
+
+ card.classList.toggle(
+
+ "cold-active",
+
+ Boolean(item.active)
+
+ );
+
+ return;
+
+ }
+
+ /*
+  * 強風・乾燥
+  *
+  * 気象庁の注意報等が有効なら
+  * 従来どおりactive表示
+  */
+
+ card.classList.remove("cold-active");
+
+ card.classList.toggle(
+
+ "active",
+
+ Boolean(item.active)
+
+ );
+
+ }
+
+
+ function displayInfluenza(influenza) {
+
+ const levelElement =
+
+ document.getElementById("fluLevel");
+
+ const valueElement =
+
+ document.getElementById("perSentinel");
+
+ const metaElement =
+
+ document.getElementById("fluMeta");
+
+ levelElement.classList.remove("error");
+
+ levelElement.textContent =
+
+ influenza.level || "確認中";
+
+ const value =
+
+ Number(influenza.perSentinel);
+
+ if (Number.isFinite(value)) {
+
+ valueElement.innerHTML =
+
+ value.toFixed(2) +
+
+ '<span class="sentinel-unit">人</span>';
+
+ } else {
+
+ valueElement.innerHTML =
+
+ '--<span class="sentinel-unit">人</span>';
+
+ }
+
+ const metaParts = [];
+
+ if (influenza.week) {
+
+ metaParts.push(influenza.week);
+
+ }
+
+ if (
+
+ influenza.period &&
+
+ influenza.period !== "東京都"
+
+ ) {
+
+ metaParts.push(influenza.period);
+
+ }
+
+ metaElement.textContent =
+
+ metaParts.length > 0
+
+ ? metaParts.join("　")
+
+ : "最新情報を確認中";
+
+ fitInfluenza();
+
+ }
+
+
+ async function loadData() {
+
+ try {
+
+ const response = await fetch(
+
+ DATA_URL + "?t=" + Date.now(),
+
+ {
+
+ cache: "no-store"
+
+ }
+
+ );
+
+ if (!response.ok) {
+
+ throw new Error(
+
+ "status.json HTTP " +
+
+ response.status
+
+ );
+
+ }
+
+ const data =
+
+ await response.json();
+
+ displayInfluenza(
+
+ data.influenza || {}
+
+ );
+
+ const weather =
+
+ data.weather || {};
+
+ displayCard(
+
+ "wind",
+
+ weather.wind || {}
+
+ );
+
+ displayCard(
+
+ "dry",
+
+ weather.dry || {}
+
+ );
+
+ displayCard(
+
+ "cold",
+
+ weather.cold || {}
+
+ );
+
+ document.getElementById(
+
+ "footer"
+
+ ).textContent =
+
+ "更新：" +
+
+ (data.updated || "--") +
+
+ "　" +
+
+ (data.sourceStatus || "");
+
+ } catch (error) {
+
+ console.error(error);
+
+ document.getElementById(
+
+ "fluLevel"
+
+ ).textContent =
+
+ "取得失敗";
+
+ document.getElementById(
+
+ "fluLevel"
+
+ ).classList.add(
+
+ "error"
+
+ );
+
+ document.getElementById(
+
+ "perSentinel"
+
+ ).innerHTML =
+
+ '--<span class="sentinel-unit">人</span>';
+
+ document.getElementById(
+
+ "fluMeta"
+
+ ).textContent =
+
+ "データ取得を確認してください";
+
+ document.getElementById(
+
+ "footer"
+
+ ).textContent =
+
+ "データ更新を確認してください";
+
+ fitInfluenza();
+
+ }
+
+ }
+
+
+ updateClock();
+
+ setInterval(
+
+ updateClock,
+
+ 1000
+
+ );
+
+ window.addEventListener(
+
+ "resize",
+
+ fitInfluenza
+
+ );
+
+ loadData();
+
+ setInterval(
+
+ loadData,
+
+ 10 * 60 * 1000
+
+ );
+
+ </script>
 
 </body>
 
