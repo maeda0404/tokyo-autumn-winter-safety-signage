@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="ja">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -215,7 +216,6 @@
       gap: var(--gap);
     }
 
-    /* カード：枠の大きさに合わせて文字を伸縮させる（コンテナクエリ） */
     .card {
       min-width: 0;
       min-height: 0;
@@ -233,7 +233,6 @@
       container-type: size;
     }
 
-    /* 1行目：旧ブラウザ用の値　2行目：枠基準の値（対応ブラウザで上書き） */
     .card-name {
       font-size: clamp(29px, 5vmin, 52px);
       font-size: clamp(22px, 24cqmin, 96px);
@@ -295,7 +294,19 @@
       --bg: #effcf9;
     }
 
-    /* ===== 注意報・警報 発令中の表示 ===== */
+    /*
+     * 低温専用
+     * 5℃以下の場合は黄色枠だけで注意を示す。
+     * 背景反転・点滅・「発令中」表示は行わない。
+     */
+    .card.cold-active {
+      border-color: #ffd600;
+      border-width: clamp(4px, 0.9vmin, 8px);
+    }
+
+    /*
+     * 強風・乾燥の注意報発令中表示
+     */
     .card.active {
       background: var(--c);
       color: #ffffff;
@@ -323,10 +334,12 @@
     }
 
     @keyframes alertPulse {
-      0%, 100% {
+      0%,
+      100% {
         filter: brightness(1);
         box-shadow: 0 0 0 0 rgba(255, 214, 0, 0.0);
       }
+
       50% {
         filter: brightness(1.12);
         box-shadow: 0 0 0 clamp(2px, 0.5vmin, 5px) rgba(255, 214, 0, 0.7);
@@ -412,30 +425,50 @@
 </head>
 
 <body>
+
   <header class="header">
     <div class="header-title">東京　秋冬安全情報</div>
     <div id="clock">--:--:--</div>
   </header>
 
   <main>
+
     <section class="flu">
-      <div class="panel-title">インフルエンザ情報</div>
+
+      <div class="panel-title">
+        インフルエンザ情報
+      </div>
 
       <div class="flu-main">
-        <div class="flu-caption">東京都の<br>流行状況</div>
+
+        <div class="flu-caption">
+          東京都の<br>流行状況
+        </div>
 
         <div class="flu-data">
-          <div class="flu-level" id="fluLevel">確認中</div>
+
+          <div class="flu-level" id="fluLevel">
+            確認中
+          </div>
 
           <div class="sentinel-box">
-            <div class="sentinel-label">定点当たり報告数</div>
+
+            <div class="sentinel-label">
+              定点当たり報告数
+            </div>
+
             <div class="sentinel-value" id="perSentinel">
               --<span class="sentinel-unit">人</span>
             </div>
+
           </div>
 
-          <div class="flu-meta" id="fluMeta">データ取得中</div>
+          <div class="flu-meta" id="fluMeta">
+            データ取得中
+          </div>
+
         </div>
+
       </div>
 
       <div class="actions">
@@ -443,33 +476,73 @@
         <div class="action">換気</div>
         <div class="action">体調報告</div>
       </div>
+
     </section>
 
     <section class="weather">
+
       <article class="card wind" id="windCard">
-        <div class="card-badge">⚠ 発令中</div>
-        <div class="card-name">強風</div>
-        <div class="card-state" id="windState">確認中</div>
+
+        <div class="card-badge">
+          ⚠ 発令中
+        </div>
+
+        <div class="card-name">
+          強風
+        </div>
+
+        <div class="card-state" id="windState">
+          確認中
+        </div>
+
         <div class="card-note" id="windNote"></div>
+
       </article>
 
       <article class="card dry" id="dryCard">
-        <div class="card-badge">⚠ 発令中</div>
-        <div class="card-name">乾燥</div>
-        <div class="card-state" id="dryState">確認中</div>
+
+        <div class="card-badge">
+          ⚠ 発令中
+        </div>
+
+        <div class="card-name">
+          乾燥
+        </div>
+
+        <div class="card-state" id="dryState">
+          確認中
+        </div>
+
         <div class="card-note" id="dryNote"></div>
+
       </article>
 
       <article class="card cold" id="coldCard">
-        <div class="card-badge">⚠ 発令中</div>
-        <div class="card-name">低温</div>
-        <div class="card-state" id="coldState">確認中</div>
+
+        <!--
+          低温は独自基準（5℃以下）のため、
+          「⚠ 発令中」バッジは設置しない
+        -->
+
+        <div class="card-name">
+          低温
+        </div>
+
+        <div class="card-state" id="coldState">
+          確認中
+        </div>
+
         <div class="card-note" id="coldNote"></div>
+
       </article>
+
     </section>
+
   </main>
 
-  <footer class="footer" id="footer">データを読み込んでいます</footer>
+  <footer class="footer" id="footer">
+    データを読み込んでいます
+  </footer>
 
   <script>
     "use strict";
@@ -478,60 +551,146 @@
 
     // 枠からはみ出す場合、収まるまで文字サイズを1pxずつ小さくする
     function fitText(element, minSize) {
+
       if (!element) {
         return;
       }
 
       element.style.fontSize = "";
-      let size = parseFloat(getComputedStyle(element).fontSize);
 
-      while (element.scrollWidth > element.clientWidth && size > minSize) {
+      let size = parseFloat(
+        getComputedStyle(element).fontSize
+      );
+
+      while (
+        element.scrollWidth > element.clientWidth &&
+        size > minSize
+      ) {
         size -= 1;
         element.style.fontSize = size + "px";
       }
     }
 
+
     function fitInfluenza() {
-      fitText(document.getElementById("fluLevel"), 16);
-      fitText(document.getElementById("perSentinel"), 16);
+
+      fitText(
+        document.getElementById("fluLevel"),
+        16
+      );
+
+      fitText(
+        document.getElementById("perSentinel"),
+        16
+      );
     }
+
 
     function updateClock() {
+
       document.getElementById("clock").textContent =
-        new Date().toLocaleTimeString("ja-JP", {
-          hour: "2-digit",
-          minute: "2-digit",
-          second: "2-digit",
-          hour12: false
-        });
+        new Date().toLocaleTimeString(
+          "ja-JP",
+          {
+            hour: "2-digit",
+            minute: "2-digit",
+            second: "2-digit",
+            hour12: false
+          }
+        );
     }
+
 
     function displayCard(key, item) {
-      const card = document.getElementById(key + "Card");
 
-      document.getElementById(key + "State").textContent =
-        item.active ? item.alertText : item.normalText;
+      const card =
+        document.getElementById(key + "Card");
 
-      document.getElementById(key + "Note").textContent =
+      const stateElement =
+        document.getElementById(key + "State");
+
+      const noteElement =
+        document.getElementById(key + "Note");
+
+      if (!card || !stateElement || !noteElement) {
+        return;
+      }
+
+      item = item || {};
+
+      stateElement.textContent =
+        item.active
+          ? (item.alertText || "注意")
+          : (item.normalText || "情報なし");
+
+      noteElement.textContent =
         item.note || "";
 
-      card.classList.toggle("active", Boolean(item.active));
+      /*
+       * 低温だけ表示方法を分離。
+       *
+       * active = true
+       * → 黄色枠
+       * → 「低温・凍結注意」を表示
+       *
+       * 点滅なし
+       * 背景反転なし
+       * 「⚠ 発令中」なし
+       */
+      if (key === "cold") {
+
+        card.classList.remove("active");
+
+        card.classList.toggle(
+          "cold-active",
+          Boolean(item.active)
+        );
+
+        return;
+      }
+
+      /*
+       * 強風・乾燥
+       *
+       * 気象庁の注意報等が有効なら
+       * 従来どおりactive表示
+       */
+      card.classList.remove("cold-active");
+
+      card.classList.toggle(
+        "active",
+        Boolean(item.active)
+      );
     }
 
+
     function displayInfluenza(influenza) {
-      const levelElement = document.getElementById("fluLevel");
-      const valueElement = document.getElementById("perSentinel");
-      const metaElement = document.getElementById("fluMeta");
+
+      const levelElement =
+        document.getElementById("fluLevel");
+
+      const valueElement =
+        document.getElementById("perSentinel");
+
+      const metaElement =
+        document.getElementById("fluMeta");
 
       levelElement.classList.remove("error");
-      levelElement.textContent = influenza.level || "確認中";
 
-      const value = Number(influenza.perSentinel);
+      levelElement.textContent =
+        influenza.level || "確認中";
+
+      const value =
+        Number(influenza.perSentinel);
 
       if (Number.isFinite(value)) {
+
         valueElement.innerHTML =
-          value.toFixed(2) + '<span class="sentinel-unit">人</span>';
+          value.toFixed(2) +
+          '<span class="sentinel-unit">人</span>';
+
       } else {
+
         valueElement.innerHTML =
           '--<span class="sentinel-unit">人</span>';
       }
@@ -542,7 +701,10 @@
         metaParts.push(influenza.week);
       }
 
-      if (influenza.period && influenza.period !== "東京都") {
+      if (
+        influenza.period &&
+        influenza.period !== "東京都"
+      ) {
         metaParts.push(influenza.period);
       }
 
@@ -554,49 +716,113 @@
       fitInfluenza();
     }
 
+
     async function loadData() {
+
       try {
+
         const response = await fetch(
           DATA_URL + "?t=" + Date.now(),
-          { cache: "no-store" }
+          {
+            cache: "no-store"
+          }
         );
 
         if (!response.ok) {
-          throw new Error("status.json HTTP " + response.status);
+          throw new Error(
+            "status.json HTTP " +
+            response.status
+          );
         }
 
-        const data = await response.json();
+        const data =
+          await response.json();
 
-        displayInfluenza(data.influenza || {});
-        displayCard("wind", data.weather.wind);
-        displayCard("dry", data.weather.dry);
-        displayCard("cold", data.weather.cold);
+        displayInfluenza(
+          data.influenza || {}
+        );
 
-        document.getElementById("footer").textContent =
-          "更新：" + data.updated + "　" + (data.sourceStatus || "");
+        const weather =
+          data.weather || {};
+
+        displayCard(
+          "wind",
+          weather.wind || {}
+        );
+
+        displayCard(
+          "dry",
+          weather.dry || {}
+        );
+
+        displayCard(
+          "cold",
+          weather.cold || {}
+        );
+
+        document.getElementById(
+          "footer"
+        ).textContent =
+          "更新：" +
+          (data.updated || "--") +
+          "　" +
+          (data.sourceStatus || "");
+
       } catch (error) {
+
         console.error(error);
 
-        document.getElementById("fluLevel").textContent = "取得失敗";
-        document.getElementById("fluLevel").classList.add("error");
-        document.getElementById("perSentinel").innerHTML =
+        document.getElementById(
+          "fluLevel"
+        ).textContent =
+          "取得失敗";
+
+        document.getElementById(
+          "fluLevel"
+        ).classList.add(
+          "error"
+        );
+
+        document.getElementById(
+          "perSentinel"
+        ).innerHTML =
           '--<span class="sentinel-unit">人</span>';
-        document.getElementById("fluMeta").textContent =
+
+        document.getElementById(
+          "fluMeta"
+        ).textContent =
           "データ取得を確認してください";
-        document.getElementById("footer").textContent =
+
+        document.getElementById(
+          "footer"
+        ).textContent =
           "データ更新を確認してください";
 
         fitInfluenza();
       }
     }
 
-    updateClock();
-    setInterval(updateClock, 1000);
 
-    window.addEventListener("resize", fitInfluenza);
+    updateClock();
+
+    setInterval(
+      updateClock,
+      1000
+    );
+
+    window.addEventListener(
+      "resize",
+      fitInfluenza
+    );
 
     loadData();
-    setInterval(loadData, 10 * 60 * 1000);
+
+    setInterval(
+      loadData,
+      10 * 60 * 1000
+    );
   </script>
+
 </body>
+
 </html>
