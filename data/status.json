@@ -1,5 +1,5 @@
 {
-  "updated": "2026-11-22 17:31",
+  "updated": "2026-11-22 17:46",
   "sourceStatus": "一部取得失敗：感染症情報",
   "influenza": {
     "level": "流行中",
@@ -42,8 +42,8 @@
       "activeNames": [
         "乾燥注意報"
       ],
-      "reportDateTime": "2026-11-22T17:20:00+09:00",
-      "sourceFile": "20261122082053_0_VPWS50_010000.xml",
+      "reportDateTime": "2026-11-22T17:40:00+09:00",
+      "sourceFile": "20261122084055_0_VPWS50_010000.xml",
       "sourceType": "VPWS50",
       "emptyStatusAccepted": true,
       "resultLocked": true
