@@ -1,5 +1,5 @@
 {
-  "updated": "2026-11-25 04:01",
+  "updated": "2026-11-25 04:16",
   "sourceStatus": "一部取得失敗：感染症情報",
   "influenza": {
     "level": "流行中",
@@ -23,7 +23,7 @@
       "note": "飛散・揚重確認"
     },
     "dry": {
-      "active": false,
+      "active": true,
       "normalText": "情報なし",
       "alertText": "火気注意",
       "note": "消火確認を徹底"
@@ -38,12 +38,13 @@
   "debug": {
     "warning": {
       "windActive": true,
-      "dryActive": false,
+      "dryActive": true,
       "activeNames": [
-        "強風注意報"
+        "強風注意報",
+        "乾燥注意報"
       ],
-      "reportDateTime": "2026-11-25T03:50:00+09:00",
-      "sourceFile": "20261124185106_0_VPWS50_010000.xml",
+      "reportDateTime": "2026-11-25T04:10:00+09:00",
+      "sourceFile": "20261124191057_0_VPWS50_010000.xml",
       "sourceType": "VPWS50",
       "emptyStatusAccepted": true,
       "resultLocked": true
